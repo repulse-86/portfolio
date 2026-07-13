@@ -13,7 +13,7 @@ const emit = defineEmits<{
 const lightboxIndex = ref<number | null>(null)
 
 const lightboxImage = computed(() =>
-    lightboxIndex.value !== null ? props.project.images[lightboxIndex.value] : null,
+    lightboxIndex.value !== null ? props.project.thumbnailImages[lightboxIndex.value] : null,
 )
 
 const openLightbox = (index: number) => {
@@ -71,7 +71,7 @@ onUnmounted(() => {
 
             <div
                 :class="[
-                    'relative bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl w-full max-h-[90vh] overflow-hidden',
+                    'relative bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl w-full max-h-[90vh] overflow-y-auto',
                     project.thumbnailImages.length === 1
                         ? 'max-w-2xl flex flex-col'
                         : 'max-w-5xl flex flex-col md:flex-row',
@@ -102,9 +102,9 @@ onUnmounted(() => {
 
                 <div
                     v-else-if="project.thumbnailImages.length"
-                    class="md:w-1/2 bg-zinc-100 dark:bg-zinc-900 overflow-y-auto"
+                    class="md:w-1/2 bg-zinc-100 dark:bg-zinc-900 md:overflow-y-auto"
                 >
-                    <div class="grid grid-cols-2 gap-1.5 p-1.5">
+                    <div class="grid grid-cols-3 sm:grid-cols-2 gap-1.5 p-1.5">
                         <button
                             v-for="(img, idx) in project.thumbnailImages"
                             :key="idx"
@@ -114,7 +114,7 @@ onUnmounted(() => {
                             <img
                                 :src="img"
                                 :alt="`${project.title} screenshot ${idx + 1}`"
-                                class="w-full h-32 sm:h-36 object-cover hover:scale-105 transition-transform duration-300"
+                                class="w-full aspect-video object-cover hover:scale-105 transition-transform duration-300"
                             />
                         </button>
                     </div>
@@ -123,7 +123,7 @@ onUnmounted(() => {
                 <div
                     :class="
                         [project.thumbnailImages.length === 1 ? '' : 'md:w-1/2'] +
-                        ' p-6 sm:p-8 space-y-4 overflow-y-auto'
+                        ' p-6 sm:p-8 space-y-4 md:overflow-y-auto'
                     "
                 >
                     <div class="space-y-1">
@@ -169,49 +169,47 @@ onUnmounted(() => {
             </div>
         </div>
 
-        <Teleport to="body">
-            <div
-                v-if="lightboxImage"
-                class="fixed inset-0 z-[60] flex items-center justify-center p-4"
-                @click.self="closeLightbox"
-            >
-                <div class="absolute inset-0 bg-black/80" @click="closeLightbox" />
+        <div
+            v-if="lightboxImage"
+            class="fixed inset-0 z-[60] flex items-center justify-center p-4"
+            @click.self="closeLightbox"
+        >
+            <div class="absolute inset-0 bg-black/80" />
 
-                <div class="relative max-w-5xl w-full flex items-center justify-center">
+            <div class="relative max-w-5xl w-full flex items-center justify-center">
+                <button
+                    class="absolute left-0 -translate-x-full mr-4 p-3 text-white/60 hover:text-white transition-colors"
+                    @click.stop="prevImage"
+                >
+                    <i class="ph ph-caret-left text-3xl" />
+                </button>
+
+                <div class="relative">
                     <button
-                        class="absolute left-0 -translate-x-full mr-4 p-3 text-white/60 hover:text-white transition-colors"
-                        @click="prevImage"
+                        class="absolute -top-12 right-0 p-2 text-white/60 hover:text-white transition-colors"
+                        @click="closeLightbox"
                     >
-                        <i class="ph ph-caret-left text-3xl" />
+                        <i class="ph ph-x text-2xl" />
                     </button>
-
-                    <div class="relative">
-                        <button
-                            class="absolute -top-12 right-0 p-2 text-white/60 hover:text-white transition-colors"
-                            @click="closeLightbox"
-                        >
-                            <i class="ph ph-x text-2xl" />
-                        </button>
-                        <img
-                            :src="lightboxImage"
-                            :alt="`${project.title} screenshot ${(lightboxIndex ?? 0) + 1}`"
-                            class="max-h-[80vh] max-w-full rounded-lg shadow-2xl object-contain"
-                        />
-                        <div
-                            class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 text-sm font-mono"
-                        >
-                            {{ (lightboxIndex ?? 0) + 1 }} / {{ project.images.length }}
-                        </div>
+                    <img
+                        :src="lightboxImage"
+                        :alt="`${project.title} screenshot ${(lightboxIndex ?? 0) + 1}`"
+                        class="max-h-[80vh] max-w-full rounded-lg shadow-2xl object-contain"
+                    />
+                    <div
+                        class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 text-sm font-mono"
+                    >
+                        {{ (lightboxIndex ?? 0) + 1 }} / {{ project.images.length }}
                     </div>
-
-                    <button
-                        class="absolute right-0 translate-x-full ml-4 p-3 text-white/60 hover:text-white transition-colors"
-                        @click="nextImage"
-                    >
-                        <i class="ph ph-caret-right text-3xl" />
-                    </button>
                 </div>
+
+                <button
+                    class="absolute right-0 translate-x-full ml-4 p-3 text-white/60 hover:text-white transition-colors"
+                    @click.stop="nextImage"
+                >
+                    <i class="ph ph-caret-right text-3xl" />
+                </button>
             </div>
-        </Teleport>
+        </div>
     </Teleport>
 </template>
