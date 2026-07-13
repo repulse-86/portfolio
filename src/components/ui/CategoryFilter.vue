@@ -12,7 +12,6 @@ const emit = defineEmits<{
 const categories: { label: string; value: ProjectCategory }[] = [
     { label: 'All Projects', value: 'all' },
     { label: 'Systems', value: 'systems' },
-    { label: 'Interactive & Tools', value: 'interactive' },
     { label: 'Personal', value: 'personal' },
 ]
 </script>

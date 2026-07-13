@@ -10,7 +10,7 @@ export interface Experience {
     responsibilities: string[]
 }
 
-export type ProjectCategory = 'all' | 'systems' | 'interactive' | 'personal'
+export type ProjectCategory = 'all' | 'systems' | 'personal'
 
 export interface Project {
     id: string
