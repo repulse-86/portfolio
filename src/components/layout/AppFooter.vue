@@ -5,11 +5,7 @@
         <div
             class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4"
         >
-            <div class="flex space-x-6">
-                <a href="#" class="hover:text-zinc-800 dark:hover:text-zinc-300">Terms</a>
-                <a href="#" class="hover:text-zinc-800 dark:hover:text-zinc-300">Privacy</a>
-                <a href="#" class="hover:text-zinc-800 dark:hover:text-zinc-300">Security</a>
-            </div>
+            <div class="text-zinc-500 dark:text-zinc-500">John Kenneth B. Ornias</div>
         </div>
     </footer>
 </template>

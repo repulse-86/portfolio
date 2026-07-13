@@ -42,7 +42,7 @@ defineEmits<{
 
         <div class="space-y-3 pt-2">
             <h4 class="text-xs font-bold text-zinc-500 uppercase tracking-wide">
-                Digital Networks
+                John Kenneth B. Ornias
             </h4>
             <div class="flex justify-center gap-4">
                 <a

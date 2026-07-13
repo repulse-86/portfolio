@@ -19,6 +19,14 @@ body {
         border-color 0.3s ease;
 }
 
+a,
+button,
+[role='button'],
+select,
+summary {
+    cursor: default;
+}
+
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }

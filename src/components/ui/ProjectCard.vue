@@ -17,7 +17,7 @@ defineEmits<{
 
 <template>
     <div
-        class="project-card group bg-white dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-900 rounded-xl overflow-hidden flex flex-col h-full transition-all duration-300 hover:border-zinc-400 dark:hover:border-zinc-700 cursor-pointer"
+        class="project-card group bg-white dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-900 rounded-xl overflow-hidden flex flex-col h-full transition-all duration-300 hover:border-zinc-400 dark:hover:border-zinc-700 cursor-default"
         @click="$emit('click')"
     >
         <div
