@@ -26,7 +26,7 @@ const navLinks = [
         <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
             <a href="#" class="text-lg font-bold tracking-tight flex items-center space-x-2">
                 <span class="w-3 h-3 bg-brand-600 rounded-none inline-block" />
-                <span>jornias.dev</span>
+                <span>kenn.dev</span>
             </a>
 
             <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
