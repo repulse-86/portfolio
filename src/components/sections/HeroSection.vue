@@ -3,8 +3,8 @@
         <h1
             class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6 max-w-4xl"
         >
-            Crafting robust and structured architectures using
-            <span class="text-brand-600 dark:text-brand-100">Laravel & Vue.js</span>.
+            Building reliable, scalable systems with
+            <span class="text-brand-600 dark:text-brand-100">modern languages and frameworks</span>.
         </h1>
 
         <p
