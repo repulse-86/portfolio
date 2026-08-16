@@ -4,13 +4,13 @@ export const projects: Project[] = [
     {
         id: '01',
         category: 'systems',
-        techLabel: 'System • Laravel / Vue',
-        techStack: 'Inertia & MySQL',
+        techLabel: 'System • Laravel / Vue • Spring Boot',
+        techStack: 'Inertia & MySQL / Spring Boot',
         title: 'NextCall Queue System',
         description:
             'NextCall is a modern, browser-based queue management system designed for banks, clinics, government offices, retail stores, and service centers that need a faster, more organized way to manage customer flow across multiple counters and branches. Customers receive a queue number instantly and can track their status through live display screens, kiosks, or mobile devices. Staff can serve, skip, recall, or prioritize customers with a single click, while managers control services, counters, staff assignments, and branch operations from one centralized dashboard.',
-        demoUrl: 'https://olive-partridge-593852.hostingersite.com/',
-        badgeText: 'Inertia & MySQL',
+        demoUrl: 'https://nextcall-iedp.onrender.com/',
+        badgeText: 'Laravel / Spring Boot',
         images: [
             'https://i.imgur.com/HWShNcN.png',
             'https://i.imgur.com/sbg1cdB.png',

@@ -54,10 +54,10 @@ defineEmits<{
                     <i class="ph ph-github-logo text-xl" />
                 </a>
                 <a
-                    href="https://olive-partridge-593852.hostingersite.com/"
+                    href="https://nextcall-iedp.onrender.com/"
                     target="_blank"
                     class="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all"
-                    aria-label="Alternative Portfolio Link"
+                    aria-label="NextCall Live Demo"
                 >
                     <i class="ph ph-globe text-xl" />
                 </a>
