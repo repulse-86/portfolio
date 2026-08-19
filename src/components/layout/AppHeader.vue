@@ -23,13 +23,18 @@ const navLinks = [
     <header
         class="sticky top-0 z-40 w-full border-b border-zinc-200 bg-white/90 dark:bg-neutral-950/90 dark:border-zinc-900 backdrop-blur-md"
     >
-        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="#" class="text-lg font-bold tracking-tight flex items-center space-x-2">
+        <div class="max-w-5xl mx-auto px-6 h-16 grid grid-cols-3 items-center">
+            <a
+                href="#"
+                class="text-lg font-bold tracking-tight flex items-center space-x-2 justify-self-start col-start-1"
+            >
                 <span class="w-3 h-3 bg-brand-600 rounded-none inline-block" />
                 <span>kenn.dev</span>
             </a>
 
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+            <nav
+                class="hidden md:flex items-center justify-center space-x-8 text-sm font-medium md:col-start-2"
+            >
                 <a
                     v-for="link in navLinks"
                     :key="link.href"
@@ -40,10 +45,10 @@ const navLinks = [
                 </a>
             </nav>
 
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center justify-self-end col-start-3 space-x-4">
                 <ThemeToggle :dark-mode="darkMode" @toggle="$emit('toggleTheme')" />
                 <button
-                    class="md:hidden p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all"
+                    class="md:hidden p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all"
                     aria-label="Open Menu"
                     @click="mobileMenuOpen = !mobileMenuOpen"
                 >

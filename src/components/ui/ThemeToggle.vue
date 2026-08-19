@@ -10,7 +10,7 @@ defineEmits<{
 
 <template>
     <button
-        class="p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all"
+        class="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all"
         aria-label="Toggle Theme"
         @click="$emit('toggle')"
     >
