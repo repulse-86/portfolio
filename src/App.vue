@@ -33,7 +33,7 @@ const handleFilter = (category: ProjectCategory) => {
 </script>
 
 <template>
-    <div class="flex flex-col min-h-screen">
+    <div id="top" class="flex flex-col min-h-screen">
         <ToastNotification :toast="toast" />
         <AppHeader
             v-model:mobile-menu-open="mobileMenuOpen"
