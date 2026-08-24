@@ -5,12 +5,14 @@ export const projects: Project[] = [
         id: '01',
         category: 'systems',
         techLabel: 'System • Laravel / Vue • Spring Boot',
-        techStack: 'Inertia & MySQL / Spring Boot',
         title: 'NextCall Queue System',
         description:
-            'NextCall is a modern, browser-based queue management system designed for banks, clinics, government offices, retail stores, and service centers that need a faster, more organized way to manage customer flow across multiple counters and branches. Customers receive a queue number instantly and can track their status through live display screens, kiosks, or mobile devices. Staff can serve, skip, recall, or prioritize customers with a single click, while managers control services, counters, staff assignments, and branch operations from one centralized dashboard.',
+            'Modern, browser-based queue management system for banks, clinics, government offices, retail stores, and service centers. Features multi-tenant branch management with configurable services, windows, and staff across Basic/Pro/Enterprise plans. Real-time WebSocket engine powers live display boards with flash animations, bell alerts, and voice announcements. Includes a public self-service kiosk with spam protection, thermal receipt printing, and role-based portals for Super Admin, Org Admin, Manager, and Staff. Staff workspace supports one-click service selection, window claiming, queue search, and status transitions. Security includes JWT auth with refresh token rotation, device fingerprinting, BCrypt passwords, and rate-limited WebSocket handshakes.',
+        shortDescription:
+            'Modern, browser-based queue management system for banks, clinics, government offices, retail stores, and service centers. Features multi-tenant branch management with configurable services, windows, and staff across Basic/Pro/Enterprise plans. Real-time WebSocket engine powers live display boards with flash animations, bell alerts, and voice announcements. Includes a public self-service kiosk with spam protection, thermal receipt printing, and role-based portals for Super Admin, Org Admin, Manager, and Staff. Staff workspace supports one-click service selection...',
         demoUrl: 'https://nextcall-iedp.onrender.com/',
         badgeText: 'Laravel / Spring Boot',
+        techStack: 'Java 21, Spring Boot 4.1, Spring Security, Spring Data JPA, WebSocket, MySQL',
         images: [
             'https://i.imgur.com/HWShNcN.png',
             'https://i.imgur.com/sbg1cdB.png',
@@ -45,11 +47,27 @@ export const projects: Project[] = [
         techStack: 'Inertia & MySQL',
         title: 'Bus Booking System',
         description:
-            'Web-based bus booking platform for searching routes, selecting seats, and completing reservations with secure payment processing.',
+            'Bus booking platform built with Laravel and Vue 3 with two user roles: admin and customer. Customers browse a fleet of 15 buses across multiple destinations with filtering by date, location, and bus type, and select seats through an interactive grid with real-time availability checking. Bookings follow a three-status workflow of pending, approved, and declined, with payment receipt upload and queued email notifications on creation and status changes. Laravel Reverb WebSocket broadcasting provides live status updates to the customer dashboard. Admins approve or decline bookings with optional decline reasons and view an analytics dashboard with ApexCharts for bookings by bus type, cumulative monthly sales, and new user growth. Features include week-of-month bus scheduling with cached listings, profile management with two-factor authentication, repository and service layer architecture, and an Inertia.js SPA frontend with responsive navigation and reusable Vue components.',
+        shortDescription:
+            'Bus booking platform built with Laravel and Vue 3 with two user roles: admin and customer. Customers browse a fleet of 15 buses...',
         demoUrl: 'https://mediumspringgreen-locust-530613.hostingersite.com/',
         badgeText: 'Booking Platform',
-        images: ['https://i.imgur.com/ITLaKBG.png', 'https://i.imgur.com/mdZgHS7.png'],
-        thumbnailImages: ['https://i.imgur.com/ITLaKBGl.jpg', 'https://i.imgur.com/mdZgHS7l.jpg'],
+        images: [
+            'https://i.imgur.com/ITLaKBG.png',
+            'https://i.imgur.com/mdZgHS7.png',
+            'https://i.imgur.com/SdEZmlS.jpg',
+            'https://i.imgur.com/AHUcZvx.jpg',
+            'https://i.imgur.com/WndLUEE.jpg',
+            'https://i.imgur.com/8LUYreL.jpg',
+        ],
+        thumbnailImages: [
+            'https://i.imgur.com/ITLaKBGl.jpg',
+            'https://i.imgur.com/mdZgHS7l.jpg',
+            'https://i.imgur.com/SdEZmlSl.jpg',
+            'https://i.imgur.com/AHUcZvxl.jpg',
+            'https://i.imgur.com/WndLUEEl.jpg',
+            'https://i.imgur.com/8LUYreLl.jpg',
+        ],
     },
     {
         id: '03',
@@ -106,7 +124,9 @@ export const projects: Project[] = [
         techStack: 'Inertia & MySQL',
         title: 'Reddit Like',
         description:
-            'Community-driven discussion platform with threaded comments, upvote/downvote mechanics, and category-based topic filtering across communities.',
+            'Community-driven discussion platform built with Laravel, featuring threaded comments with nested replies, upvote/downvote mechanics for both posts and comments, and group-based community organization. Users can create and join topic-specific groups, share posts with photo attachments, and engage in moderated discussions with built-in profanity and spam content filtering. Additional features include personal notes with color-coding and photo support, an interactive pixel art canvas with activity logging, user authentication with two-factor security, admin post pinning, popular/trending feeds with caching, user activity leaderboards, and a Vue.js SPA frontend powered by Inertia.js.',
+        shortDescription:
+            'Community-driven discussion platform built with Laravel, featuring threaded comments with nested replies, upvote/downvote mechanics for posts...',
         demoUrl: 'https://dodgerblue-stingray-883983.hostingersite.com/',
         badgeText: 'Community Platform',
         images: [
@@ -139,18 +159,22 @@ export const projects: Project[] = [
         techStack: 'Inertia & MySQL',
         title: 'Car Test Queuing System',
         description:
-            'On-premise queue management built for vehicle testing centers. Clients register themselves to the queue for test drives on cars they are considering to purchase.',
+            'Queue management system built with Laravel 12 and Vue 3.5 for vehicle testing centers. Staff create queue entries with customer details and assigned cars, with auto-generated queue codes cycling daily per car using DB transactions and row locking. Queue statuses follow a workflow of Pending, InService, Completed, Cancelled, Skipped, and NoShow, with auto-advance logic promoting the next pending entry when the current one finishes. A dedicated public display screen shows live queue codes for up to 6 brands with carousel rotation for brands with multiple active cars, powered by Laravel Reverb WebSockets. Includes brand and car management with image uploads, a review system for completed entries, admin and staff roles with policy-based authorization, a dashboard with queue and overall statistics, and a Vue 3 frontend with dark mode and responsive layouts.',
+        shortDescription:
+            'Queue management system built with Laravel 12 and Vue 3.5 for vehicle testing centers. Staff create queue entries with customer details and assigned cars...',
         demoUrl: 'https://lightsteelblue-spoonbill-626721.hostingersite.com',
         badgeText: 'Queue Management',
         images: [
             'https://i.imgur.com/8m6dmGE.png',
             'https://i.imgur.com/qiI5x5C.png',
             'https://i.imgur.com/vqSkINf.png',
+            'https://i.imgur.com/VZO1khz.jpg',
         ],
         thumbnailImages: [
             'https://i.imgur.com/8m6dmGEl.jpg',
             'https://i.imgur.com/qiI5x5Cl.jpg',
             'https://i.imgur.com/vqSkINfl.jpg',
+            'https://i.imgur.com/VZO1khzl.jpg',
         ],
     },
     {
@@ -160,11 +184,44 @@ export const projects: Project[] = [
         techStack: 'Livewire & Tailwind',
         title: 'Queuing System',
         description:
-            'Real-time browser-based queuing system built for a financial services firm. Private contract.',
+            'Real-time browser-based queuing system built for a financial services firm with a fixed set of 3 services and 2 windows each. Admin and manager roles can edit service names, window labels, and manage staff accounts. Real-time queue updates via WebSocket broadcasting keep display boards synchronized across branches. Database-level locking and transactions ensure no race conditions during queue operations, handling concurrent ticket generation and status updates reliably. Built as a private contract with a streamlined, domain-specific workflow tailored to the firm\'s operational needs.',
         demoUrl: '',
         badgeText: 'Real-time Queue',
         images: ['https://i.imgur.com/jRoRUkY.png', 'https://i.imgur.com/vG16jPx.png'],
         thumbnailImages: ['https://i.imgur.com/jRoRUkYl.jpg', 'https://i.imgur.com/vG16jPxl.jpg'],
+    },
+    {
+        id: '14',
+        category: 'systems',
+        techLabel: 'System • React / Vite',
+        techStack: 'React 19, Zustand & Tailwind',
+        title: 'Water Refilling Station',
+        description:
+            'Full-stack React + Vite management app for water refilling station operators. Covers the complete business lifecycle with POS sales, order/delivery tracking, a Kanban fulfillment board, customer dual-asset ledgers for bottle debt and cash balance, meter-based volume auditing, BOM-driven inventory, and animated Recharts analytics. Also includes status workflow rules for walk-in vs. delivery orders, four-tab reporting, store settings, and demo authentication.',
+        shortDescription:
+            'Full-stack React management app for water refilling station operators...',
+        demoUrl: '',
+        badgeText: 'Management System',
+        images: [
+            'https://i.imgur.com/tMNNqqw.png',
+            'https://i.imgur.com/Dd1k26d.png',
+            'https://i.imgur.com/G8qE2dz.png',
+            'https://i.imgur.com/m7JdnLc.png',
+            'https://i.imgur.com/beLLzGW.png',
+            'https://i.imgur.com/wxDWjD9.png',
+            'https://i.imgur.com/lmAZmAq.png',
+            'https://i.imgur.com/N8x0MMN.png',
+        ],
+        thumbnailImages: [
+            'https://i.imgur.com/tMNNqqwl.jpg',
+            'https://i.imgur.com/Dd1k26dl.jpg',
+            'https://i.imgur.com/G8qE2dzl.jpg',
+            'https://i.imgur.com/m7JdnLcl.jpg',
+            'https://i.imgur.com/beLLzGWl.jpg',
+            'https://i.imgur.com/wxDWjD9l.jpg',
+            'https://i.imgur.com/lmAZmAql.jpg',
+            'https://i.imgur.com/N8x0MMNl.jpg',
+        ],
     },
     {
         id: '08',
@@ -198,7 +255,9 @@ export const projects: Project[] = [
         techStack: 'Vue',
         title: 'Windows 8.1 Start Screen',
         description:
-            'Replicating the Windows 8.1 Start Screen with responsive tile layouts and hover effects.',
+            'Windows tribute site built with Vue 3, TypeScript, Vite, Pinia, and Tailwind CSS v4. Features CSS-delegated live tile animations driven by a single global pulse interval for minimal CPU overhead, with randomized flip, fade, and slide transitions. RSS feed integration injects live news into tiles with client-side caching and stale fallback. Guestbook backed by a separate Laravel API with DOMPurify XSS protection and honeypot spam prevention. Virtual pet tree with day/night cycle, weather simulation, and offline-aware growth mechanics across 12 stages. Windows Phone mobile layout with edge-swipe navigation, long-press edit mode, and distinct per-device tile coordinates. Persistent drag-and-resize grid via GridStack with localStorage persistence, wallpaper customization with average-color extraction driving the full UI theme, and parallax background with horizontal-scroll hijack. Composable-based architecture with strict TypeScript, lazy-loaded routes for code-splitting, and Vitest testing setup.',
+        shortDescription:
+            'Windows tribute site with live tile animations, guestbook, and virtual pet tree...',
         demoUrl: 'https://repulse.nekoweb.org/',
         badgeText: 'Personal Project',
         images: ['https://i.imgur.com/WChuQHc.png'],
@@ -211,7 +270,9 @@ export const projects: Project[] = [
         techStack: 'Inertia & MySQL',
         title: 'Canteen Ordering System',
         description:
-            'Digital canteen ordering. Browse menus, place orders, track prep status live.',
+            'Digital canteen ordering platform with role-based access for admin, customer, and staff accounts. Customers browse products by category, manage a persistent shopping cart, place orders with special instructions, and pay via receipt upload or over-the-counter payment while tracking status from pending to complete. Staff work through the order queue and push status updates as orders are prepared and ready. Admins manage products with images, stock levels, and availability toggles, plus companies and categories, backed by a metrics dashboard. Includes product reviews and ratings, email verification, two-factor authentication, browser session logout, account self-deletion, cached listings and statistics, policy-based authorization, repository and service layers, and an Inertia.js SPA frontend built on Laravel Jetstream.',
+        shortDescription:
+            'Digital canteen ordering platform with role-based access for three user roles...',
         demoUrl: 'https://lightpink-coyote-349858.hostingersite.com',
         badgeText: 'Ordering System',
         images: [

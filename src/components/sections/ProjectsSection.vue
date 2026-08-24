@@ -48,7 +48,7 @@ const closeModal = () => {
                 :tech-label="project.techLabel"
                 :tech-stack="project.techStack"
                 :title="project.title"
-                :description="project.description"
+                :description="project.shortDescription ?? project.description"
                 :demo-url="project.demoUrl"
                 :badge-text="project.badgeText"
                 :thumbnail-images="project.thumbnailImages"

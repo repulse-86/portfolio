@@ -19,6 +19,7 @@ export interface Project {
     techStack: string
     title: string
     description: string
+    shortDescription?: string
     demoUrl: string
     badgeText: string
     images: string[]
