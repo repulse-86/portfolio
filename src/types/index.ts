@@ -21,7 +21,6 @@ export interface Project {
     description: string
     shortDescription?: string
     demoUrl: string
-    badgeText: string
     images: string[]
     thumbnailImages: string[]
 }

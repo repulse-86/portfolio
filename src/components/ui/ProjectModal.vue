@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { marked } from 'marked'
 import type { Project } from '@/types'
 
 const props = defineProps<{
@@ -15,6 +16,10 @@ const lightboxIndex = ref<number | null>(null)
 const lightboxImage = computed(() =>
     lightboxIndex.value !== null ? props.project.thumbnailImages[lightboxIndex.value] : null,
 )
+
+const renderedDescription = computed(() => {
+    return marked.parse(props.project.description, { async: false }) as string
+})
 
 const openLightbox = (index: number) => {
     lightboxIndex.value = index
@@ -137,9 +142,10 @@ onUnmounted(() => {
                         </h2>
                     </div>
 
-                    <p class="text-sm text-zinc-600 dark:text-zinc-400 font-light leading-relaxed">
-                        {{ project.description }}
-                    </p>
+                    <div
+                        class="text-sm text-zinc-600 dark:text-zinc-400 font-light leading-relaxed prose prose-sm prose-zinc dark:prose-invert max-w-none [&_ul]:mt-2 [&_ul]:space-y-2 [&_ul]:list-none [&_ul]:pl-0 [&_li]:flex [&_li]:items-start [&_li]:gap-2 [&_li_p]:m-0 [&_li::before]:content-['•'] [&_li::before]:text-brand-500 [&_li::before]:shrink-0 [&_li::before]:mt-0.5"
+                        v-html="renderedDescription"
+                    />
 
                     <div
                         class="flex items-center gap-4 pt-4 border-t border-zinc-200 dark:border-zinc-800"
@@ -162,7 +168,7 @@ onUnmounted(() => {
                             View Live Demo
                         </a>
                         <span v-else class="text-xs font-semibold text-zinc-500">
-                            {{ project.badgeText }}
+                            {{ project.techLabel }}
                         </span>
                     </div>
                 </div>

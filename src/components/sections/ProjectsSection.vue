@@ -50,7 +50,6 @@ const closeModal = () => {
                 :title="project.title"
                 :description="project.shortDescription ?? project.description"
                 :demo-url="project.demoUrl"
-                :badge-text="project.badgeText"
                 :thumbnail-images="project.thumbnailImages"
                 class="project"
                 @click="openProject(project)"
