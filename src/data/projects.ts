@@ -273,7 +273,7 @@ export const projects: Project[] = [
             'Full-stack React + Vite management app for water refilling station operators.\n- POS sales with order/delivery tracking and a Kanban fulfillment board\n- Customer dual-asset ledgers for bottle debt and cash balance\n- Meter-based volume auditing and BOM-driven inventory\n- Animated Recharts analytics dashboard with four-tab reporting\n- Status workflow rules for walk-in vs. delivery orders, store settings, and demo authentication',
         shortDescription:
             'Full-stack React management app for water refilling station operators.\n- POS sales with order/delivery tracking and Kanban fulfillment\n- Customer dual-asset ledgers for bottle debt and cash balance\n- Meter-based volume auditing and BOM-driven inventory\n- Recharts analytics dashboard with four-tab reporting...',
-        demoUrl: '',
+        demoUrl: 'https://water-refill-ui.onrender.com/',
         images: [
             'https://i.imgur.com/tMNNqqw.png',
             'https://i.imgur.com/Dd1k26d.png',
