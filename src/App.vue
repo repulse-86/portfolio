@@ -16,7 +16,7 @@ import ExperienceSection from '@/components/standard/ExperienceSection.vue'
 import ProjectsSection from '@/components/standard/ProjectsSection.vue'
 import ContactSection from '@/components/standard/ContactSection.vue'
 import ToastNotification from '@/components/shared/ToastNotification.vue'
-import { email } from '@/data/constants'
+import { email } from '@/data/site'
 
 const { toggleTheme } = useTheme()
 const { copyBtnText, toast, copyEmailToClipboard } = useClipboard(email)

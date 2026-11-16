@@ -1,19 +1,23 @@
+<script setup lang="ts">
+import { headline, intro } from '@/data/profile'
+</script>
+
 <template>
     <section class="flex flex-col justify-center pt-8 md:pt-16 pb-6">
         <h1
             class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6 max-w-4xl"
         >
-            Building reliable, scalable systems with
-            <span class="text-brand-600 dark:text-brand-100">modern languages and frameworks</span>.
+            {{ headline.before }}
+            <span class="text-brand-600 dark:text-brand-100">{{ headline.highlight }}</span
+            >.
         </h1>
 
         <p
             class="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl font-light leading-relaxed mb-8"
         >
-            Hi, I'm
-            <strong class="font-medium text-zinc-900 dark:text-white">John Kenneth B. Ornias</strong
-            >. I am a detail-oriented web developer dedicated to constructing efficient,
-            maintainable, and highly secure web systems.
+            {{ intro.lead }}
+            <strong class="font-medium text-zinc-900 dark:text-white">{{ intro.name }}</strong
+            >. {{ intro.body }}
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4">

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { contactIntro } from '@/data/profile'
+import { email, featuredDemoUrl, githubUrl } from '@/data/site'
+
 defineProps<{
     copyBtnText: string
 }>()
@@ -14,8 +17,7 @@ defineEmits<{
             <span class="text-xs uppercase font-bold tracking-widest text-brand-600">Contact</span>
             <h2 class="text-3xl font-bold tracking-tight">Let's Connect</h2>
             <p class="text-zinc-600 dark:text-zinc-400 font-light leading-relaxed max-w-lg mx-auto">
-                Have an interesting project, position, or application layout requirement? Reach out
-                instantly via email to coordinate technical solutions.
+                {{ contactIntro }}
             </p>
         </div>
 
@@ -28,9 +30,7 @@ defineEmits<{
             <div
                 class="flex flex-col sm:flex-row items-center justify-between gap-4 border border-zinc-200 dark:border-zinc-800 p-4 rounded-lg bg-zinc-50 dark:bg-zinc-950"
             >
-                <span class="text-sm font-mono font-medium truncate select-all"
-                    >johnkenneth.ornias@gmail.com</span
-                >
+                <span class="text-sm font-mono font-medium truncate select-all">{{ email }}</span>
                 <button
                     class="inline-flex items-center text-xs font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-100 dark:hover:text-brand-200 transition-colors flex-shrink-0"
                     @click="$emit('copy')"
@@ -46,7 +46,7 @@ defineEmits<{
             </h4>
             <div class="flex justify-center gap-4">
                 <a
-                    href="https://github.com/repulse-86"
+                    :href="githubUrl"
                     target="_blank"
                     class="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all"
                     aria-label="GitHub Profile"
@@ -54,7 +54,7 @@ defineEmits<{
                     <i class="ph ph-github-logo text-xl" />
                 </a>
                 <a
-                    href="https://nextcall-iedp.onrender.com/"
+                    :href="featuredDemoUrl"
                     target="_blank"
                     class="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all"
                     aria-label="NextCall Live Demo"

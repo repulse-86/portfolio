@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Skill } from '@/types'
+import { about } from '@/data/profile'
 import SkillBlock from '@/components/shared/SkillBlock.vue'
 
 defineProps<{
@@ -20,16 +21,11 @@ defineProps<{
             class="lg:col-span-7 space-y-6 text-zinc-600 dark:text-zinc-400 leading-relaxed font-light"
         >
             <p>
-                I have built a strong engineering foundation centered on modern frameworks, secure
-                authorization structures, and optimal database layouts. I hold a
-                <strong>Bachelor of Science in Information Technology (Cum Laude, 2023)</strong>
-                from Fellowship Baptist College.
+                {{ about.paragraphOneBefore }}
+                <strong>{{ about.degree }}</strong>
+                {{ about.paragraphOneAfter }}
             </p>
-            <p>
-                My professional philosophy highlights modular programming practices, strict design
-                patterns, and close technical coordination to transform clean specifications into
-                high-performance web realities.
-            </p>
+            <p>{{ about.paragraphTwo }}</p>
 
             <div class="pt-4">
                 <h3 class="text-sm font-semibold text-zinc-900 dark:text-white mb-4">
