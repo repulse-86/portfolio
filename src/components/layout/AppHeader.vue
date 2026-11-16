@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import ThemeToggle from '@/components/ui/ThemeToggle.vue'
-
-defineProps<{
-    darkMode: boolean
-}>()
+import ThemeToggle from '@/components/layout/ThemeToggle.vue'
 
 defineEmits<{
     toggleTheme: []
@@ -46,7 +42,7 @@ const navLinks = [
             </nav>
 
             <div class="flex items-center justify-self-end col-start-3 space-x-4">
-                <ThemeToggle :dark-mode="darkMode" @toggle="$emit('toggleTheme')" />
+                <ThemeToggle @toggle="$emit('toggleTheme')" />
                 <button
                     class="md:hidden p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all"
                     aria-label="Open Menu"

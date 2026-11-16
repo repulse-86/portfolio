@@ -10,15 +10,15 @@ import { useProjectFilter } from '@/composables/useProjectFilter'
 import { useImagePreloader } from '@/composables/useImagePreloader'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
-import HeroSection from '@/components/sections/HeroSection.vue'
-import AboutSection from '@/components/sections/AboutSection.vue'
-import ExperienceSection from '@/components/sections/ExperienceSection.vue'
-import ProjectsSection from '@/components/sections/ProjectsSection.vue'
-import ContactSection from '@/components/sections/ContactSection.vue'
-import ToastNotification from '@/components/ui/ToastNotification.vue'
+import HeroSection from '@/components/standard/HeroSection.vue'
+import AboutSection from '@/components/standard/AboutSection.vue'
+import ExperienceSection from '@/components/standard/ExperienceSection.vue'
+import ProjectsSection from '@/components/standard/ProjectsSection.vue'
+import ContactSection from '@/components/standard/ContactSection.vue'
+import ToastNotification from '@/components/shared/ToastNotification.vue'
 import { email } from '@/data/constants'
 
-const { darkMode, toggleTheme } = useTheme()
+const { toggleTheme } = useTheme()
 const { copyBtnText, toast, copyEmailToClipboard } = useClipboard(email)
 const { activeFilter, filteredProjects } = useProjectFilter(projects)
 
@@ -35,11 +35,7 @@ const handleFilter = (category: ProjectCategory) => {
 <template>
     <div id="top" class="flex flex-col min-h-screen">
         <ToastNotification :toast="toast" />
-        <AppHeader
-            v-model:mobile-menu-open="mobileMenuOpen"
-            :dark-mode="darkMode"
-            @toggle-theme="toggleTheme"
-        />
+        <AppHeader v-model:mobile-menu-open="mobileMenuOpen" @toggle-theme="toggleTheme" />
 
         <main class="flex-grow max-w-5xl mx-auto px-6 w-full py-12 space-y-24 md:space-y-32">
             <HeroSection />

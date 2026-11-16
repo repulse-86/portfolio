@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Skill } from '@/types'
-import SkillBlock from '@/components/ui/SkillBlock.vue'
+import SkillBlock from '@/components/shared/SkillBlock.vue'
 
 defineProps<{
     skills: Skill[]

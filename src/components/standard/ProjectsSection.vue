@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { Project, ProjectCategory } from '@/types'
-import ProjectCard from '@/components/ui/ProjectCard.vue'
-import ProjectModal from '@/components/ui/ProjectModal.vue'
-import CategoryFilter from '@/components/ui/CategoryFilter.vue'
+import ProjectCard from '@/components/standard/ProjectCard.vue'
+import ProjectModal from '@/components/standard/ProjectDetailDialog.vue'
+import CategoryFilter from '@/components/standard/CategoryFilter.vue'
 
 defineProps<{
     projects: Project[]

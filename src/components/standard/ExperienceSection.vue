@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Experience } from '@/types'
 import { githubUrl } from '@/data/constants'
-import TimelineItem from '@/components/ui/TimelineItem.vue'
+import TimelineItem from '@/components/shared/TimelineItem.vue'
 
 defineProps<{
     experience: Experience[]

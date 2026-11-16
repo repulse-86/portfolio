@@ -143,7 +143,7 @@ onUnmounted(() => {
                     </div>
 
                     <div
-                        class="text-sm text-zinc-600 dark:text-zinc-400 font-light leading-relaxed prose prose-sm prose-zinc dark:prose-invert max-w-none [&_ul]:mt-2 [&_ul]:space-y-2 [&_ul]:list-none [&_ul]:pl-0 [&_li]:flex [&_li]:items-start [&_li]:gap-2 [&_li_p]:m-0 [&_li::before]:content-['•'] [&_li::before]:text-brand-500 [&_li::before]:shrink-0 [&_li::before]:mt-0.5"
+                        class="text-sm text-zinc-600 dark:text-zinc-400 font-light leading-relaxed prose prose-sm prose-zinc dark:prose-invert max-w-none [&_ul]:mt-2 [&_ul]:space-y-2 [&_ul]:list-none [&_ul]:pl-0 [&_li]:flex [&_li]:items-start [&_li]:gap-2 [&_li_p]:m-0 [&_li::before]:content-['ΓÇó'] [&_li::before]:text-brand-500 [&_li::before]:shrink-0 [&_li::before]:mt-0.5"
                         v-html="renderedDescription"
                     />
 
