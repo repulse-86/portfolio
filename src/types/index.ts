@@ -19,11 +19,15 @@ export interface Project {
     techStack: string
     title: string
     description: string
+    descriptionHtml: string
     shortDescription?: string
+    shortDescriptionHtml?: string
     demoUrl: string
     images: string[]
     thumbnailImages: string[]
 }
+
+export type ProjectInput = Omit<Project, 'descriptionHtml' | 'shortDescriptionHtml'>
 
 export interface ToastState {
     visible: boolean

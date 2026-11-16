@@ -1,6 +1,7 @@
-import type { Project } from '@/types'
+import type { ProjectInput } from '@/types'
+import { projectDescriptions, projectShortDescriptions } from './projectDescriptions'
 
-export const projects: Project[] = [
+const projectsRaw: ProjectInput[] = [
     {
         id: '01',
         category: 'systems',
@@ -307,3 +308,9 @@ export const projects: Project[] = [
         thumbnailImages: ['https://i.imgur.com/Z3z1O7ol.jpg'],
     },
 ]
+
+export const projects = projectsRaw.map((p) => ({
+    ...p,
+    descriptionHtml: projectDescriptions[p.id] ?? '',
+    shortDescriptionHtml: projectShortDescriptions[p.id],
+}))
