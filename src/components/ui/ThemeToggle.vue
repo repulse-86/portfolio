@@ -1,8 +1,4 @@
 <script setup lang="ts">
-defineProps<{
-    darkMode: boolean
-}>()
-
 defineEmits<{
     toggle: []
 }>()
@@ -14,7 +10,7 @@ defineEmits<{
         aria-label="Toggle Theme"
         @click="$emit('toggle')"
     >
-        <i v-if="darkMode" class="ph ph-sun text-lg" />
-        <i v-else class="ph ph-moon text-lg" />
+        <i class="ph ph-sun text-lg hidden dark:inline" />
+        <i class="ph ph-moon text-lg inline dark:hidden" />
     </button>
 </template>

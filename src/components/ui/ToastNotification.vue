@@ -8,8 +8,14 @@ defineProps<{
 
 <template>
     <div
-        class="fixed bottom-6 right-6 z-50 transform transition-all duration-300 pointer-events-none"
-        :class="[toast.visible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0']"
+        class="fixed bottom-6 right-6 z-50 pointer-events-none transition-all duration-300 ease-out"
+        :class="
+            toast.visible
+                ? 'translate-y-0 opacity-100 animate-toast-in'
+                : 'translate-y-20 opacity-0'
+        "
+        role="status"
+        aria-live="polite"
     >
         <div
             class="bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 px-5 py-3 rounded-lg shadow-lg flex items-center space-x-3 border border-zinc-800 dark:border-zinc-200"
@@ -27,3 +33,20 @@ defineProps<{
         </div>
     </div>
 </template>
+
+<style scoped>
+@keyframes toast-in {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-toast-in {
+    animation: toast-in 0.3s ease-out both;
+}
+</style>

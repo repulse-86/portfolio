@@ -1,4 +1,4 @@
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 
 export function useTheme() {
     const darkMode = ref(true)
@@ -13,17 +13,6 @@ export function useTheme() {
             localStorage.setItem('theme', 'light')
         }
     }
-
-    onMounted(() => {
-        const savedTheme = localStorage.getItem('theme')
-        if (savedTheme === 'light') {
-            darkMode.value = false
-            document.documentElement.classList.remove('dark')
-        } else {
-            darkMode.value = true
-            document.documentElement.classList.add('dark')
-        }
-    })
 
     return { darkMode, toggleTheme }
 }

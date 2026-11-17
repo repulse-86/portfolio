@@ -3,6 +3,8 @@ export interface Skill {
     technologies: string
 }
 
+export type PanoramaSection = 'about' | 'projects' | 'experience' | 'contact'
+
 export interface Experience {
     period: string
     title: string
@@ -19,11 +21,14 @@ export interface Project {
     techStack: string
     title: string
     description: string
+    descriptionHtml: string
     shortDescription?: string
     demoUrl: string
     images: string[]
     thumbnailImages: string[]
 }
+
+export type ProjectInput = Omit<Project, 'descriptionHtml'>
 
 export interface ToastState {
     visible: boolean

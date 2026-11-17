@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import ThemeToggle from '@/components/ui/ThemeToggle.vue'
-
-type PanoramaSection = 'about' | 'projects' | 'experience' | 'contact'
+import type { PanoramaSection } from '@/types'
 
 const props = defineProps<{
-    darkMode: boolean
     panoramaMode?: boolean
     activeSection?: PanoramaSection
 }>()
@@ -119,7 +117,7 @@ const handleBrandClick = (event: MouseEvent) => {
                     <i :class="['ph', panoramaMode ? 'ph-rows' : 'ph-columns', 'text-lg']" />
                 </button>
 
-                <ThemeToggle :dark-mode="darkMode" @toggle="emit('toggleTheme')" />
+                <ThemeToggle @toggle="emit('toggleTheme')" />
 
                 <button
                     class="rounded-lg p-2 text-zinc-600 transition-all hover:bg-zinc-100 md:hidden dark:text-zinc-400 dark:hover:bg-zinc-900"

@@ -28,8 +28,10 @@ defineEmits<{
             <div
                 class="flex flex-col gap-3 rounded-lg border border-zinc-200 bg-zinc-50 p-4 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-800 dark:bg-zinc-950"
             >
-                <span class="truncate font-mono text-sm font-medium"
-                    >johnkenneth.ornias@gmail.com</span
+                <a
+                    href="mailto:johnkenneth.ornias@gmail.com"
+                    class="truncate font-mono text-sm font-medium hover:text-brand-600 dark:hover:text-brand-100 transition-colors"
+                    >johnkenneth.ornias@gmail.com</a
                 >
                 <button
                     type="button"

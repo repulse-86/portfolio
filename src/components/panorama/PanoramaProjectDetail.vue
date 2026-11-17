@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { marked } from 'marked'
+import { computed, onMounted, onUnmounted } from 'vue'
 import type { Project } from '@/types'
-import { usePanoramaScroll } from '@/composables/usePanoramaScroll'
+import Panorama from './framework/Panorama.vue'
+import PanoramaSection from './framework/PanoramaSection.vue'
 
 const props = defineProps<{
     project: Project
@@ -11,13 +11,6 @@ const props = defineProps<{
 const emit = defineEmits<{
     back: []
 }>()
-
-const container = ref<HTMLElement | null>(null)
-
-usePanoramaScroll(container)
-
-const renderMarkdown = (lines: string[]) =>
-    marked.parse(lines.join('\n'), { async: false }) as string
 
 const descriptionLines = computed(() =>
     props.project.description
@@ -33,15 +26,13 @@ const shouldSplitDescription = computed(
 const splitIndex = computed(() => Math.max(1, Math.ceil(descriptionLines.value.length / 2)))
 
 const firstDescriptionHtml = computed(() =>
-    renderMarkdown(
-        shouldSplitDescription.value
-            ? descriptionLines.value.slice(0, splitIndex.value)
-            : descriptionLines.value,
-    ),
+    shouldSplitDescription.value
+        ? props.project.descriptionHtml.split('\n').slice(0, splitIndex.value).join('\n')
+        : props.project.descriptionHtml,
 )
 
 const secondDescriptionHtml = computed(() =>
-    renderMarkdown(descriptionLines.value.slice(splitIndex.value)),
+    props.project.descriptionHtml.split('\n').slice(splitIndex.value).join('\n'),
 )
 
 const heroImage = computed(() => props.project.images[0] ?? props.project.thumbnailImages[0])
@@ -78,12 +69,8 @@ onUnmounted(() => {
             </kbd>
         </button>
 
-        <div ref="container" data-panorama-scroll class="panorama-scroll">
-            <section
-                class="panorama-panel"
-                data-panorama-panel
-                :aria-label="`${project.title} overview`"
-            >
+        <Panorama class="h-[calc(100vh_-_64px)]" unit="88vw" unit-sm="65vw" gap="0rem" pad="0rem">
+            <PanoramaSection id="overview" scrollable :aria-label="`${project.title} overview`">
                 <div
                     class="flex min-h-full flex-col gap-8 px-8 py-20 md:px-12 lg:flex-row lg:gap-12"
                 >
@@ -142,12 +129,12 @@ onUnmounted(() => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </PanoramaSection>
 
-            <section
+            <PanoramaSection
                 v-if="shouldSplitDescription && secondDescriptionHtml"
-                class="panorama-panel"
-                data-panorama-panel
+                id="details"
+                scrollable
                 :aria-label="`${project.title} details continued`"
             >
                 <div class="flex min-h-full items-center px-8 py-20 md:px-16">
@@ -169,20 +156,23 @@ onUnmounted(() => {
                         />
                     </div>
                 </div>
-            </section>
+            </PanoramaSection>
 
-            <section
+            <PanoramaSection
                 v-for="(image, index) in project.images"
+                :id="`shot-${index + 1}`"
                 :key="`${image}-${index}`"
-                class="panorama-panel flex items-center justify-center bg-zinc-100 p-3 pt-16 md:p-4 md:pt-20 dark:bg-neutral-900"
-                data-panorama-panel
+                scrollable
+                class="bg-zinc-100 p-3 pt-16 md:p-4 md:pt-20 dark:bg-neutral-900"
                 :aria-label="`${project.title} screenshot ${index + 1}`"
             >
-                <img
-                    :src="image"
-                    :alt="`${project.title} screenshot ${index + 1}`"
-                    class="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
-                />
+                <div class="flex flex-1 items-center justify-center">
+                    <img
+                        :src="image"
+                        :alt="`${project.title} screenshot ${index + 1}`"
+                        class="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
+                    />
+                </div>
 
                 <div
                     class="pointer-events-none absolute right-8 bottom-6 flex items-center gap-3 font-mono text-[10px] font-semibold tracking-[0.3em] text-zinc-400 uppercase dark:text-zinc-500"
@@ -191,9 +181,7 @@ onUnmounted(() => {
                     <span class="h-1 w-1 rounded-full bg-brand-600" />
                     <span>{{ index + 1 }} / {{ project.images.length }}</span>
                 </div>
-            </section>
-
-            <div class="w-[12vw] flex-none md:w-[35vw]" aria-hidden="true" />
-        </div>
+            </PanoramaSection>
+        </Panorama>
     </div>
 </template>

@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { marked } from 'marked'
-
 const props = defineProps<{
     id: string
     techLabel: string
     techStack: string
     title: string
-    description: string
+    descriptionHtml: string
     demoUrl?: string
     thumbnailImages: string[]
 }>()
@@ -15,10 +12,6 @@ const props = defineProps<{
 defineEmits<{
     click: []
 }>()
-
-const renderedDescription = computed(() => {
-    return marked.parse(props.description, { async: false }) as string
-})
 </script>
 
 <template>
@@ -33,6 +26,8 @@ const renderedDescription = computed(() => {
                 v-if="thumbnailImages.length"
                 :src="thumbnailImages[0]"
                 :alt="`${title} preview`"
+                loading="lazy"
+                decoding="async"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
             <div
@@ -53,7 +48,7 @@ const renderedDescription = computed(() => {
             </h3>
             <div
                 class="text-sm text-zinc-500 dark:text-zinc-400 font-light leading-relaxed flex-grow prose prose-sm prose-zinc dark:prose-invert max-w-none [&_ul]:mt-2 [&_ul]:space-y-1 [&_ul]:list-none [&_ul]:pl-0 [&_li]:flex [&_li]:items-start [&_li]:gap-1.5 [&_li]:text-xs [&_li_p]:m-0 [&_li::before]:content-['•'] [&_li::before]:text-brand-500 [&_li::before]:shrink-0 [&_li::before]:mt-0.5"
-                v-html="renderedDescription"
+                v-html="props.descriptionHtml"
             />
             <div
                 class="flex items-center justify-between pt-4 border-t border-zinc-100 dark:border-zinc-900 mt-6 text-xs text-zinc-600 dark:text-zinc-400 font-semibold"

@@ -7,8 +7,7 @@ import { projects } from '@/data/projects'
 import { useTheme } from '@/composables/useTheme'
 import { useClipboard } from '@/composables/useClipboard'
 import { useProjectFilter } from '@/composables/useProjectFilter'
-import { useImagePreloader } from '@/composables/useImagePreloader'
-import type { PanoramaSection } from '@/composables/usePanoramaScroll'
+import type { PanoramaSection } from '@/types'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import HeroSection from '@/components/sections/HeroSection.vue'
@@ -20,12 +19,9 @@ import PanoramaView from '@/components/panorama/PanoramaView.vue'
 import ToastNotification from '@/components/ui/ToastNotification.vue'
 import { email } from '@/data/constants'
 
-const { darkMode, toggleTheme } = useTheme()
+const { toggleTheme } = useTheme()
 const { copyBtnText, toast, copyEmailToClipboard } = useClipboard(email)
 const { activeFilter, filteredProjects } = useProjectFilter(projects)
-
-const allThumbnails = projects.flatMap((p) => p.thumbnailImages)
-useImagePreloader(allThumbnails)
 
 const mobileMenuOpen = ref(false)
 const panoramaMode = ref(false)
@@ -42,8 +38,6 @@ const togglePanorama = () => {
 
 const resetWindowScroll = () => {
     window.scrollTo(0, 0)
-    document.documentElement.scrollTop = 0
-    document.body.scrollTop = 0
 }
 
 watch(panoramaMode, () => {
@@ -68,7 +62,6 @@ const handleSectionClick = (section: PanoramaSection) => {
         <ToastNotification :toast="toast" />
         <AppHeader
             v-model:mobile-menu-open="mobileMenuOpen"
-            :dark-mode="darkMode"
             :panorama-mode="panoramaMode"
             :active-section="activeSection"
             @toggle-theme="toggleTheme"

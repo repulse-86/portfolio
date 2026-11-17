@@ -16,6 +16,10 @@
     --color-success: #22c55e;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 html,
 body {
     scrollbar-width: none;
@@ -44,44 +48,18 @@ summary {
     cursor: default;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-.no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.panorama-scroll {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: calc(100vh - 64px);
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
+dialog {
+    background: transparent;
+    padding: 0;
+    border: 0;
+    max-width: none;
 }
 
-.panorama-panel {
-    position: relative;
-    flex: 0 0 auto;
-    width: 65vw;
-    height: calc(100vh - 64px);
-    overflow-x: hidden;
-    overflow-y: auto;
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
 }
 
-.panorama-panel--full {
-    width: 100vw;
-}
-
-@media (max-width: 767px) {
-    .panorama-panel {
-        width: 88vw;
-    }
-
-    .panorama-panel--full {
-        width: 100vw;
-    }
+body:has(dialog[open]) {
+    overflow: hidden;
 }

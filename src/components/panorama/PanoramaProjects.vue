@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import type { Project } from '@/types'
 import PanoramaProjectTile from './PanoramaProjectTile.vue'
 
@@ -9,7 +9,6 @@ const props = defineProps<{
 
 const emit = defineEmits<{
     select: [project: Project]
-    widthChange: [width: number]
 }>()
 
 const GAP = 16
@@ -17,12 +16,11 @@ const COLUMNS = 5
 const MOBILE_COLUMNS = 2
 const PREVIOUS_COLUMNS = 6
 const MAX_TILE_WIDTH = 400
-const VIEWPORT_GUTTER = 64
 const MOBILE_BREAKPOINT = 640
-const MOBILE_WIDTH_RATIO = 0.85
 
 const container = ref<HTMLElement | null>(null)
 const containerHeight = ref(0)
+const containerWidth = ref(0)
 const viewportWidth = ref(window.innerWidth)
 
 let resizeObserver: ResizeObserver | null = null
@@ -35,9 +33,12 @@ onMounted(() => {
     updateViewportWidth()
     window.addEventListener('resize', updateViewportWidth)
 
+    // Size the grid from the section box the framework declared, never from the viewport.
     resizeObserver = new ResizeObserver((entries) => {
         const entry = entries[0]
-        if (entry) containerHeight.value = entry.contentRect.height
+        if (!entry) return
+        containerHeight.value = entry.contentRect.height
+        containerWidth.value = entry.contentRect.width
     })
 
     if (container.value) resizeObserver.observe(container.value)
@@ -79,12 +80,9 @@ const gridProjects = computed(() => (isMobile.value ? props.projects : orderedPr
 const rows = computed(() => Math.max(1, Math.ceil(props.projects.length / columns.value)))
 
 const tileWidth = computed(() => {
-    if (containerHeight.value <= 0) return 0
+    if (containerHeight.value <= 0 || containerWidth.value <= 0) return 0
 
-    const availableWidth = isMobile.value
-        ? viewportWidth.value * MOBILE_WIDTH_RATIO
-        : viewportWidth.value - VIEWPORT_GUTTER
-    const maxByWidth = (availableWidth - (columns.value - 1) * GAP) / columns.value
+    const maxByWidth = (containerWidth.value - (columns.value - 1) * GAP) / columns.value
 
     if (isMobile.value) return Math.max(0, Math.min(MAX_TILE_WIDTH, maxByWidth))
 
@@ -93,17 +91,13 @@ const tileWidth = computed(() => {
     return Math.max(0, Math.min(MAX_TILE_WIDTH, maxByHeight, maxByWidth))
 })
 
-const gridWidth = computed(() => tileWidth.value * columns.value + (columns.value - 1) * GAP)
-
-watch(gridWidth, (width) => emit('widthChange', width), { immediate: true })
-
 const gridStyle = computed(() => {
     const size = tileWidth.value
     return {
         gridTemplateColumns: `repeat(${columns.value}, ${size}px)`,
         gridTemplateRows: `repeat(${rows.value}, ${size * 0.75}px)`,
         gap: `${GAP}px`,
-        justifyContent: 'start',
+        justifyContent: 'stretch',
     }
 })
 </script>

@@ -48,7 +48,7 @@ const closeModal = () => {
                 :tech-label="project.techLabel"
                 :tech-stack="project.techStack"
                 :title="project.title"
-                :description="project.shortDescription ?? project.description"
+                :description-html="project.descriptionHtml"
                 :demo-url="project.demoUrl"
                 :thumbnail-images="project.thumbnailImages"
                 class="project"
@@ -56,26 +56,30 @@ const closeModal = () => {
             />
         </div>
 
-        <ProjectModal v-if="selectedProject" :project="selectedProject" @close="closeModal" />
+        <ProjectModal
+            v-if="selectedProject"
+            :project="selectedProject"
+            :open="!!selectedProject"
+            @close="closeModal"
+        />
     </section>
 </template>
 
 <style scoped>
 .projects {
-    column-width: 300px;
-    column-gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
     width: 100%;
 }
 
 .project {
-    display: inline-block;
     width: 100%;
-    margin-bottom: 0.5rem;
 }
 
 @media (max-width: 640px) {
     .projects {
-        column-count: 1 !important;
+        grid-template-columns: 1fr;
     }
 }
 </style>
