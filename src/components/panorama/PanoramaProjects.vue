@@ -105,7 +105,7 @@ const gridStyle = computed(() => {
 <template>
     <div
         ref="container"
-        class="h-full pb-10 pt-0 sm:pt-6"
+        class="h-full pt-0 sm:pt-6"
         :class="isMobile && 'overflow-y-auto overscroll-y-contain'"
         :data-panorama-vertical="isMobile ? '' : undefined"
     >

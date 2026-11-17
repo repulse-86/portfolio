@@ -9,7 +9,7 @@ defineProps<{
 </script>
 
 <template>
-    <div class="h-full flex flex-col pt-0 pb-10 sm:pt-6">
+    <div class="h-full flex flex-col pt-0 sm:pt-6">
         <div class="grid w-full grid-cols-1 gap-6 lg:grid-cols-12">
             <div class="space-y-3 lg:col-span-4">
                 <span class="text-xs font-bold tracking-widest text-brand-600 uppercase"
