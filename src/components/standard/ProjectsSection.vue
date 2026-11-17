@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import type { Project, ProjectCategory } from '@/types'
 import ProjectCard from '@/components/standard/ProjectCard.vue'
-import ProjectModal from '@/components/standard/ProjectDetailDialog.vue'
+import ProjectDetailDialog from '@/components/standard/ProjectDetailDialog.vue'
 import CategoryFilter from '@/components/standard/CategoryFilter.vue'
 
 defineProps<{
@@ -48,7 +48,7 @@ const closeModal = () => {
                 :tech-label="project.techLabel"
                 :tech-stack="project.techStack"
                 :title="project.title"
-                :description="project.shortDescription ?? project.description"
+                :description-html="project.shortDescriptionHtml ?? project.descriptionHtml"
                 :demo-url="project.demoUrl"
                 :thumbnail-images="project.thumbnailImages"
                 class="project"
@@ -56,7 +56,12 @@ const closeModal = () => {
             />
         </div>
 
-        <ProjectModal v-if="selectedProject" :project="selectedProject" @close="closeModal" />
+        <ProjectDetailDialog
+            v-if="selectedProject"
+            :project="selectedProject"
+            :open="!!selectedProject"
+            @close="closeModal"
+        />
     </section>
 </template>
 
