@@ -7,7 +7,6 @@ import { projects } from '@/data/projects'
 import { useTheme } from '@/composables/useTheme'
 import { useClipboard } from '@/composables/useClipboard'
 import { useProjectFilter } from '@/composables/useProjectFilter'
-import { useImagePreloader } from '@/composables/useImagePreloader'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import HeroSection from '@/components/standard/HeroSection.vue'
@@ -21,9 +20,6 @@ import { email } from '@/data/site'
 const { toggleTheme } = useTheme()
 const { copyBtnText, toast, copyEmailToClipboard } = useClipboard(email)
 const { activeFilter, filteredProjects } = useProjectFilter(projects)
-
-const allThumbnails = projects.flatMap((p) => p.thumbnailImages)
-useImagePreloader(allThumbnails)
 
 const mobileMenuOpen = ref(false)
 
