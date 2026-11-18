@@ -1,8 +1,4 @@
 <script setup lang="ts">
-const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-}
-
 interface FooterLink {
     label: string
     href: string
@@ -47,9 +43,9 @@ const links: FooterLink[] = [
             <div
                 class="pt-16 flex flex-col md:flex-row justify-end items-center gap-8 font-mono text-[10px] uppercase tracking-[0.5em] opacity-40"
             >
-                <div
+                <a
+                    href="#top"
                     class="flex items-center gap-4 group cursor-pointer hover:opacity-100 transition-opacity"
-                    @click="scrollToTop"
                 >
                     <span class="group-hover:text-success transition-colors">Back to Top</span>
                     <svg
@@ -65,7 +61,7 @@ const links: FooterLink[] = [
                             d="M5 10l7-7m0 0l7 7m-7-7v18"
                         />
                     </svg>
-                </div>
+                </a>
             </div>
         </div>
     </footer>
