@@ -3,6 +3,8 @@ export interface Skill {
     technologies: string
 }
 
+export type PanoramaSection = 'about' | 'projects' | 'experience' | 'contact' | 'footer'
+
 export interface Experience {
     period: string
     title: string
