@@ -108,3 +108,22 @@ body:has(dialog[open]) {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+@keyframes section-reveal {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.section-reveal {
+    animation: section-reveal 0.7s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .section-reveal {
+        animation: none;
+    }
+}
