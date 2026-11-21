@@ -23,7 +23,7 @@ const { copyBtnText, toast, copyEmailToClipboard } = useClipboard(email)
 const { activeFilter, filteredProjects } = useProjectFilter(projects)
 
 const mobileMenuOpen = ref(false)
-const panoramaMode = ref(false)
+const panoramaMode = ref(true)
 const activeSection = ref<PanoramaSection>('about')
 const panoramaRef = ref<InstanceType<typeof PanoramaView> | null>(null)
 
