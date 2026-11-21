@@ -101,21 +101,22 @@ const handleBrandClick = (event: MouseEvent) => {
                 </a>
             </nav>
 
-            <div class="col-start-3 flex items-center space-x-2 justify-self-end">
+            <div class="col-start-3 flex items-center space-x-6 justify-self-end">
                 <ViewToggle :panorama-mode="!!panoramaMode" @toggle="emit('togglePanorama')" />
 
                 <ThemeToggle @toggle="emit('toggleTheme')" />
 
                 <button
-                    class="rounded-lg p-2 text-zinc-600 transition-all hover:bg-zinc-100 md:hidden dark:text-zinc-400 dark:hover:bg-zinc-900"
+                    class="inline-flex items-center justify-center rounded-lg text-zinc-600 transition-all hover:bg-zinc-100 md:hidden dark:text-zinc-400 dark:hover:bg-zinc-900"
                     aria-label="Open Menu"
                     @click="mobileMenuOpen = !mobileMenuOpen"
                 >
-                    <i :class="['ph', mobileMenuOpen ? 'ph-x' : 'ph-list', 'text-lg']" />
+                    <i
+                        :class="['ph', mobileMenuOpen ? 'ph-x' : 'ph-list', 'text-lg leading-none']"
+                    />
                 </button>
             </div>
         </div>
-
     </header>
 
     <Teleport to="body">
