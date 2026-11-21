@@ -50,7 +50,7 @@ const projectsRaw: ProjectInput[] = [
             'Bus booking platform built with Laravel and Vue 3 with two user roles: admin and customer.\n- Customers browse 15 buses across multiple destinations with filtering by date, location, and bus type, and select seats through an interactive grid with real-time availability checking\n- Three-status workflow of pending, approved, and declined with payment receipt upload and queued email notifications\n- Laravel Reverb WebSocket broadcasting provides live status updates to the customer dashboard\n- Admins approve or decline bookings with optional decline reasons and view an analytics dashboard with ApexCharts for bookings by bus type, cumulative monthly sales, and new user growth\n- Week-of-month bus scheduling with cached listings, profile management with 2FA, repository and service layer architecture, and Inertia.js SPA frontend with responsive navigation and reusable Vue components',
         shortDescription:
             'Bus booking platform built with Laravel and Vue 3 with two user roles: admin and customer.\n- Interactive seat grid with real-time availability checking\n- Three-status workflow of pending, approved, and declined with payment receipt upload\n- Laravel Reverb WebSocket broadcasting for live status updates\n- Admin analytics dashboard with ApexCharts...',
-        demoUrl: 'https://mediumspringgreen-locust-530613.hostingersite.com/',
+        demoUrl: 'https://bus-booking-system-vy33.onrender.com/',
         images: [
             'https://i.imgur.com/ITLaKBG.png',
             'https://i.imgur.com/mdZgHS7.png',
@@ -158,7 +158,7 @@ const projectsRaw: ProjectInput[] = [
             'Queue management system built with Laravel 12 and Vue 3.5 for vehicle testing centers.\n- Staff create queue entries with customer details and assigned cars, with auto-generated queue codes cycling daily per car using DB transactions and row locking\n- Queue statuses follow a workflow of Pending, InService, Completed, Cancelled, Skipped, and NoShow, with auto-advance logic promoting the next pending entry when the current one finishes\n- Dedicated public display screen shows live queue codes for up to 6 brands with carousel rotation, powered by Laravel Reverb WebSockets\n- Brand and car management with image uploads, a review system for completed entries, admin and staff roles with policy-based authorization, and a dashboard with queue and overall statistics\n- Vue 3 frontend with dark mode and responsive layouts',
         shortDescription:
             'Queue management system built with Laravel 12 and Vue 3.5 for vehicle testing centers.\n- Auto-generated queue codes with DB transactions and row locking\n- Pending/InService/Completed/Cancelled/Skipped/NoShow workflow with auto-advance\n- Public display screen with live queue codes and carousel rotation\n- Brand and car management with image uploads and review system...',
-        demoUrl: 'https://lightsteelblue-spoonbill-626721.hostingersite.com',
+        demoUrl: 'https://car-testing-queuing-system.onrender.com/',
         images: [
             'https://i.imgur.com/8m6dmGE.png',
             'https://i.imgur.com/qiI5x5C.png',
@@ -205,7 +205,7 @@ const projectsRaw: ProjectInput[] = [
         title: 'Read the Source',
         description:
             'An investigative puzzle game that tests your knowledge of browser internals, DevTools, and web architecture. Inspect the DOM, read source code, and execute JavaScript to solve puzzles hidden in plain sight.',
-        demoUrl: 'https://rosybrown-bee-296201.hostingersite.com',
+        demoUrl: 'https://read-the-source.onrender.com/',
         images: ['https://i.imgur.com/U21DBqY.png', 'https://i.imgur.com/rSvhaGn.png'],
         thumbnailImages: ['https://i.imgur.com/U21DBqY.jpg', 'https://i.imgur.com/rSvhaGnl.jpg'],
     },
@@ -244,7 +244,7 @@ const projectsRaw: ProjectInput[] = [
             'Digital canteen ordering platform with role-based access for admin, customer, and staff accounts.\n- Customers browse products by category, manage a persistent shopping cart, place orders with special instructions, and pay via receipt upload or over-the-counter payment while tracking status from pending to complete\n- Staff work through the order queue and push status updates as orders are prepared and ready\n- Admins manage products with images, stock levels, and availability toggles, plus companies and categories, backed by a metrics dashboard\n- Product reviews and ratings, email verification, two-factor authentication, browser session logout, and account self-deletion\n- Policy-based authorization, repository and service layers, cached listings and statistics, and Inertia.js SPA frontend built on Laravel Jetstream',
         shortDescription:
             'Digital canteen ordering platform with role-based access for admin, customer, and staff accounts.\n- Customer browsing with persistent cart, special instructions, and receipt upload\n- Staff order queue with status updates\n- Admin product, company, and category management with metrics dashboard\n- Reviews, ratings, 2FA, and policy-based authorization...',
-        demoUrl: 'https://lightpink-coyote-349858.hostingersite.com',
+        demoUrl: 'https://canteen-order-system-mahu.onrender.com/',
         images: [
             'https://i.imgur.com/Xi5T1gn.png',
             'https://i.imgur.com/k23szlq.png',
@@ -303,7 +303,7 @@ const projectsRaw: ProjectInput[] = [
         techStack: 'C# & XAML',
         title: 'LiveRSS',
         description: 'RSS feed reader app for Windows Phone 8.1.',
-        demoUrl: '',
+        demoUrl: 'https://store.live.net.co/app/963',
         images: ['https://i.imgur.com/Z3z1O7o.png'],
         thumbnailImages: ['https://i.imgur.com/Z3z1O7ol.jpg'],
     },
