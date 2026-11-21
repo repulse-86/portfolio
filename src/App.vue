@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { ProjectCategory } from '@/types'
+import { nextTick, ref, watch } from 'vue'
+import type { PanoramaSection, ProjectCategory } from '@/types'
 import { skills } from '@/data/skills'
 import { experience } from '@/data/experience'
 import { projects } from '@/data/projects'
@@ -14,6 +14,7 @@ import AboutSection from '@/components/standard/AboutSection.vue'
 import ExperienceSection from '@/components/standard/ExperienceSection.vue'
 import ProjectsSection from '@/components/standard/ProjectsSection.vue'
 import ContactSection from '@/components/standard/ContactSection.vue'
+import PanoramaView from '@/components/panorama/PanoramaView.vue'
 import ToastNotification from '@/components/shared/ToastNotification.vue'
 import { email } from '@/data/site'
 
@@ -22,29 +23,81 @@ const { copyBtnText, toast, copyEmailToClipboard } = useClipboard(email)
 const { activeFilter, filteredProjects } = useProjectFilter(projects)
 
 const mobileMenuOpen = ref(false)
+const panoramaMode = ref(false)
+const activeSection = ref<PanoramaSection>('about')
+const panoramaRef = ref<InstanceType<typeof PanoramaView> | null>(null)
 
 const handleFilter = (category: ProjectCategory) => {
     activeFilter.value = category
 }
+
+const togglePanorama = () => {
+    panoramaMode.value = !panoramaMode.value
+}
+
+const resetWindowScroll = () => {
+    window.scrollTo(0, 0)
+}
+
+watch(panoramaMode, () => {
+    activeSection.value = 'about'
+    resetWindowScroll()
+    nextTick(resetWindowScroll)
+})
+
+const handleSectionClick = (section: PanoramaSection) => {
+    if (!panoramaMode.value) return
+    panoramaRef.value?.scrollToSection(section)
+}
 </script>
 
 <template>
-    <div id="top" class="flex flex-col min-h-screen">
+    <div
+        id="top"
+        :class="
+            panoramaMode ? 'flex h-screen flex-col overflow-hidden' : 'flex min-h-screen flex-col'
+        "
+    >
         <ToastNotification :toast="toast" />
-        <AppHeader v-model:mobile-menu-open="mobileMenuOpen" @toggle-theme="toggleTheme" />
+        <AppHeader
+            v-model:mobile-menu-open="mobileMenuOpen"
+            :panorama-mode="panoramaMode"
+            :active-section="activeSection"
+            @toggle-theme="toggleTheme"
+            @toggle-panorama="togglePanorama"
+            @section-click="handleSectionClick"
+        />
 
-        <main class="flex-grow max-w-5xl mx-auto px-6 w-full py-12 space-y-24 md:space-y-32">
-            <HeroSection />
-            <AboutSection :skills="skills" />
-            <ExperienceSection :experience="experience" />
-            <ProjectsSection
-                :projects="filteredProjects"
-                :active-filter="activeFilter"
-                @filter="handleFilter"
+        <Transition name="view-slide">
+            <main
+                v-if="!panoramaMode"
+                key="normal"
+                class="mx-auto w-full max-w-5xl flex-grow space-y-24 px-6 py-12 md:space-y-32"
+            >
+                <HeroSection />
+                <AboutSection :skills="skills" />
+                <ExperienceSection :experience="experience" />
+                <ProjectsSection
+                    :projects="filteredProjects"
+                    :active-filter="activeFilter"
+                    @filter="handleFilter"
+                />
+                <ContactSection :copy-btn-text="copyBtnText" @copy="copyEmailToClipboard" />
+            </main>
+
+            <PanoramaView
+                v-else
+                key="panorama"
+                ref="panoramaRef"
+                :skills="skills"
+                :experience="experience"
+                :projects="projects"
+                :copy-btn-text="copyBtnText"
+                @copy="copyEmailToClipboard"
+                @section-change="activeSection = $event"
             />
-            <ContactSection :copy-btn-text="copyBtnText" @copy="copyEmailToClipboard" />
-        </main>
+        </Transition>
 
-        <AppFooter />
+        <AppFooter v-if="!panoramaMode" />
     </div>
 </template>
