@@ -59,9 +59,7 @@ const handleSectionClick = (section: PanoramaSection) => {
 <template>
     <div
         id="top"
-        :class="
-            panoramaMode ? 'flex h-dvh flex-col overflow-hidden' : 'flex min-h-screen flex-col'
-        "
+        :class="panoramaMode ? 'flex h-dvh flex-col overflow-hidden' : 'flex min-h-screen flex-col'"
     >
         <ToastNotification :toast="toast" />
         <AppHeader

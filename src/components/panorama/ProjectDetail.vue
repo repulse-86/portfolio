@@ -104,14 +104,14 @@ onUnmounted(() => {
                         <button
                             v-if="heroImage"
                             type="button"
-                            class="group relative flex aspect-video w-full shrink-0 items-center justify-center overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 p-2 dark:border-zinc-800 dark:bg-zinc-900"
+                            class="group relative flex w-full shrink-0 items-center justify-center overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900"
                             :aria-label="`Open ${project.title} main screenshot in full view`"
                             @click="openLightbox(0)"
                         >
                             <img
                                 :src="heroImage"
                                 :alt="`${project.title} main screenshot`"
-                                class="max-h-full max-w-full rounded-lg object-contain object-center transition-transform duration-300 group-hover:scale-[1.01]"
+                                class="max-h-[60vh] w-auto rounded-lg object-contain object-center transition-transform duration-300 group-hover:scale-[1.01]"
                                 loading="lazy"
                             />
                             <span
