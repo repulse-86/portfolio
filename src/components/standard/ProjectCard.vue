@@ -18,8 +18,7 @@ defineEmits<{
 
 <template>
     <div
-        class="project-card group bg-white dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-900 rounded-xl overflow-hidden flex flex-col transition-all duration-300 hover:border-zinc-400 dark:hover:border-zinc-700 cursor-default"
-        @click="$emit('click')"
+        class="project-card group bg-white dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-900 rounded-xl overflow-hidden flex flex-col transition-all duration-300 hover:border-zinc-400 dark:hover:border-zinc-700"
     >
         <div
             class="relative h-44 bg-zinc-100 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-900 overflow-hidden"
@@ -57,9 +56,13 @@ defineEmits<{
                 class="flex items-center justify-between pt-4 border-t border-zinc-100 dark:border-zinc-900 mt-6 text-xs text-zinc-600 dark:text-zinc-400 font-semibold"
             >
                 <span class="text-zinc-400 font-mono text-[10px]">{{ techStack }}</span>
-                <span class="flex items-center text-brand-600 dark:text-brand-100">
-                    View Details <i class="ph ph-arrow-right ml-1" />
-                </span>
+                <button
+                    type="button"
+                    class="flex items-center text-brand-600 dark:text-brand-100 hover:underline cursor-pointer"
+                    @click="() => $emit('click')"
+                >
+                    View <i class="ph ph-arrow-right ml-1" />
+                </button>
             </div>
         </div>
     </div>

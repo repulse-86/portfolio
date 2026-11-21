@@ -1,210 +1,184 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { marked } from 'marked'
 import type { Project } from '@/types'
-import ProjectDescription from '@/components/shared/ProjectDescription.vue'
-import { useLightbox } from '@/composables/useLightbox'
+import ImageLightbox from '@/components/shared/ImageLightbox.vue'
 
 const props = defineProps<{
     project: Project
-    open?: boolean
 }>()
 
 const emit = defineEmits<{
     close: []
 }>()
 
-const dialog = ref<HTMLDialogElement | null>(null)
+const lightboxIndex = ref<number | null>(null)
 
-const {
-    index: lightboxIndex,
-    current: lightboxImage,
-    open: openLightbox,
-    close: closeLightbox,
-    prev: prevImage,
-    next: nextImage,
-    handleKeydown: handleLightboxKeydown,
-} = useLightbox(() => props.project.thumbnailImages)
+const renderedDescription = computed(() => {
+    return marked.parse(props.project.description, { async: false }) as string
+})
 
-const syncOpen = () => {
-    const el = dialog.value
-    if (!el) return
-    if (props.open && !el.open) el.showModal()
-    else if (!props.open && el.open) el.close()
+const openLightbox = (index: number) => {
+    lightboxIndex.value = index
+}
+
+const closeLightbox = () => {
+    lightboxIndex.value = null
+}
+
+const prevImage = () => {
+    if (lightboxIndex.value === null) return
+    lightboxIndex.value =
+        lightboxIndex.value > 0 ? lightboxIndex.value - 1 : props.project.images.length - 1
+}
+
+const nextImage = () => {
+    if (lightboxIndex.value === null) return
+    lightboxIndex.value =
+        lightboxIndex.value < props.project.images.length - 1 ? lightboxIndex.value + 1 : 0
 }
 
 const handleKeydown = (e: KeyboardEvent) => {
-    if (handleLightboxKeydown(e)) return
-    if (e.key === 'Escape') emit('close')
+    if (e.key === 'Escape') {
+        if (lightboxIndex.value !== null) {
+            closeLightbox()
+        } else {
+            emit('close')
+        }
+    }
+    if (lightboxIndex.value !== null) {
+        if (e.key === 'ArrowLeft') prevImage()
+        if (e.key === 'ArrowRight') nextImage()
+    }
 }
-
-watch(() => props.open, syncOpen, { immediate: true })
 
 onMounted(() => {
     document.addEventListener('keydown', handleKeydown)
-    syncOpen()
+    document.body.style.overflow = 'hidden'
 })
 
 onUnmounted(() => {
     document.removeEventListener('keydown', handleKeydown)
+    document.body.style.overflow = ''
 })
 </script>
 
 <template>
-    <dialog
-        ref="dialog"
-        :open="open"
-        class="rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 p-0 shadow-2xl backdrop:bg-black/60 backdrop:backdrop-blur-sm max-w-[95vw] max-h-[90vh] w-full"
-        @click.self="emit('close')"
-    >
-        <form method="dialog" class="contents">
-            <button
-                class="absolute top-4 right-4 z-10 p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
-                @click="emit('close')"
-            >
-                <i class="ph ph-x text-lg" />
-            </button>
-        </form>
-
+    <Teleport to="body">
         <div
-            :class="[
-                'relative flex max-h-[90vh] flex-col',
-                project.thumbnailImages.length === 1
-                    ? 'max-w-2xl'
-                    : 'max-w-5xl flex flex-col md:flex-row',
-            ]"
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+            @click.self="emit('close')"
         >
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="emit('close')" />
+
             <div
-                v-if="project.thumbnailImages.length === 1"
-                class="flex items-center justify-center bg-zinc-100 dark:bg-zinc-900 p-4"
+                :class="[
+                    'relative bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl w-full max-h-[90vh] overflow-y-auto',
+                    project.thumbnailImages.length === 1
+                        ? 'max-w-2xl flex flex-col'
+                        : 'max-w-5xl flex flex-col md:flex-row',
+                ]"
             >
                 <button
-                    class="overflow-hidden focus:outline-none focus:ring-2 focus:ring-brand-600 rounded-md"
-                    @click="openLightbox(0)"
+                    class="absolute top-4 right-4 z-10 p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                    @click="emit('close')"
                 >
-                    <img
-                        :src="project.thumbnailImages[0]"
-                        :alt="`${project.title} screenshot`"
-                        loading="lazy"
-                        decoding="async"
-                        class="rounded-md hover:opacity-90 transition-opacity duration-300"
-                    />
+                    <i class="ph ph-x text-lg" />
                 </button>
-            </div>
 
-            <div
-                v-else-if="project.thumbnailImages.length"
-                class="md:w-1/2 bg-zinc-100 dark:bg-zinc-900 md:overflow-y-auto"
-            >
-                <div class="grid grid-cols-3 sm:grid-cols-2 gap-1.5 p-1.5">
+                <div
+                    v-if="project.thumbnailImages.length === 1"
+                    class="flex items-center justify-center bg-zinc-100 dark:bg-zinc-900 p-4"
+                >
                     <button
-                        v-for="(img, idx) in project.thumbnailImages"
-                        :key="idx"
                         class="overflow-hidden focus:outline-none focus:ring-2 focus:ring-brand-600 rounded-md"
-                        @click="openLightbox(idx)"
+                        @click="openLightbox(0)"
                     >
                         <img
-                            :src="img"
-                            :alt="`${project.title} screenshot ${idx + 1}`"
-                            loading="lazy"
-                            decoding="async"
-                            class="w-full aspect-video object-cover hover:scale-105 transition-transform duration-300"
+                            :src="project.thumbnailImages[0]"
+                            :alt="`${project.title} screenshot`"
+                            class="rounded-md hover:opacity-90 transition-opacity duration-300"
                         />
                     </button>
                 </div>
-            </div>
-
-            <div
-                :class="
-                    [project.thumbnailImages.length === 1 ? '' : 'md:w-1/2'] +
-                    ' p-6 sm:p-8 space-y-4 md:overflow-y-auto'
-                "
-            >
-                <div class="space-y-1">
-                    <span
-                        class="text-xs font-mono font-semibold uppercase tracking-wider text-brand-600"
-                    >
-                        {{ project.techLabel }}
-                    </span>
-                    <h2 class="text-2xl font-bold text-zinc-900 dark:text-white">
-                        {{ project.title }}
-                    </h2>
-                </div>
-
-                <ProjectDescription
-                    :html="project.descriptionHtml"
-                    class="text-sm text-zinc-600 dark:text-zinc-400 font-light leading-relaxed prose prose-sm prose-zinc dark:prose-invert max-w-none"
-                />
 
                 <div
-                    class="flex items-center gap-4 pt-4 border-t border-zinc-200 dark:border-zinc-800"
+                    v-else-if="project.thumbnailImages.length"
+                    class="md:w-1/2 bg-zinc-100 dark:bg-zinc-900 md:overflow-y-auto"
                 >
-                    <span
-                        class="text-xs font-mono text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-3 py-1.5 rounded-lg"
-                    >
-                        {{ project.techStack }}
-                    </span>
+                    <div class="grid grid-cols-3 sm:grid-cols-2 gap-1.5 p-1.5">
+                        <button
+                            v-for="(img, idx) in project.thumbnailImages"
+                            :key="idx"
+                            class="overflow-hidden focus:outline-none focus:ring-2 focus:ring-brand-600 rounded-md"
+                            @click="openLightbox(idx)"
+                        >
+                            <img
+                                :src="img"
+                                :alt="`${project.title} screenshot ${idx + 1}`"
+                                class="w-full aspect-video object-cover hover:scale-105 transition-transform duration-300"
+                            />
+                        </button>
+                    </div>
                 </div>
 
-                <div class="flex items-center gap-4 pt-2">
-                    <a
-                        v-if="project.demoUrl"
-                        :href="project.demoUrl"
-                        target="_blank"
-                        class="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium rounded-lg transition-colors"
+                <div
+                    :class="
+                        [project.thumbnailImages.length === 1 ? '' : 'md:w-1/2'] +
+                        ' p-6 sm:p-8 space-y-4 md:overflow-y-auto'
+                    "
+                >
+                    <div class="space-y-1">
+                        <span
+                            class="text-xs font-mono font-semibold uppercase tracking-wider text-brand-600"
+                        >
+                            {{ project.techLabel }}
+                        </span>
+                        <h2 class="text-2xl font-bold text-zinc-900 dark:text-white">
+                            {{ project.title }}
+                        </h2>
+                    </div>
+
+                    <div
+                        class="text-sm text-zinc-600 dark:text-zinc-400 font-light leading-relaxed prose prose-sm prose-zinc dark:prose-invert max-w-none [&_ul]:mt-2 [&_ul]:space-y-2 [&_ul]:list-none [&_ul]:pl-0 [&_li]:flex [&_li]:items-start [&_li]:gap-2 [&_li_p]:m-0 [&_li::before]:content-['•'] [&_li::before]:text-brand-500 [&_li::before]:shrink-0 [&_li::before]:mt-0.5"
+                        v-html="renderedDescription"
+                    />
+
+                    <div
+                        class="flex items-center gap-4 pt-4 border-t border-zinc-200 dark:border-zinc-800"
                     >
-                        <i class="ph ph-arrow-up-right text-base" />
-                        View Live Demo
-                    </a>
-                    <span v-else class="text-xs font-semibold text-zinc-500">
-                        {{ project.techLabel }}
-                    </span>
+                        <span
+                            class="text-xs font-mono text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-3 py-1.5 rounded-lg"
+                        >
+                            {{ project.techStack }}
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-4 pt-2">
+                        <a
+                            v-if="project.demoUrl"
+                            :href="project.demoUrl"
+                            target="_blank"
+                            class="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium rounded-lg transition-colors"
+                        >
+                            <i class="ph ph-arrow-up-right text-base" />
+                            View Live Demo
+                        </a>
+                        <span v-else class="text-xs font-semibold text-zinc-500">
+                            {{ project.techLabel }}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
-    </dialog>
 
-    <div
-        v-if="lightboxImage"
-        class="fixed inset-0 z-[60] flex items-center justify-center p-4"
-        @click.self="closeLightbox"
-    >
-        <div class="absolute inset-0 bg-black/80" />
-
-        <div class="relative max-w-5xl w-full flex items-center justify-center">
-            <button
-                class="absolute left-0 -translate-x-full mr-4 p-3 text-white/60 hover:text-white transition-colors"
-                @click.stop="prevImage"
-            >
-                <i class="ph ph-caret-left text-3xl" />
-            </button>
-
-            <div class="relative">
-                <button
-                    class="absolute -top-12 right-0 p-2 text-white/60 hover:text-white transition-colors"
-                    @click="closeLightbox"
-                >
-                    <i class="ph ph-x text-2xl" />
-                </button>
-                <img
-                    :src="lightboxImage"
-                    :alt="`${project.title} screenshot ${(lightboxIndex ?? 0) + 1}`"
-                    loading="lazy"
-                    decoding="async"
-                    class="max-h-[80vh] max-w-full rounded-lg shadow-2xl object-contain"
-                />
-                <div
-                    class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 text-sm font-mono"
-                >
-                    {{ (lightboxIndex ?? 0) + 1 }} / {{ project.images.length }}
-                </div>
-            </div>
-
-            <button
-                class="absolute right-0 translate-x-full ml-4 p-3 text-white/60 hover:text-white transition-colors"
-                @click.stop="nextImage"
-            >
-                <i class="ph ph-caret-right text-3xl" />
-            </button>
-        </div>
-    </div>
+        <ImageLightbox
+            :images="project.images"
+            :index="lightboxIndex"
+            :title="project.title"
+            @close="closeLightbox"
+            @prev="prevImage"
+            @next="nextImage"
+        />
+    </Teleport>
 </template>

@@ -59,7 +59,6 @@ const closeModal = () => {
         <ProjectDetailDialog
             v-if="selectedProject"
             :project="selectedProject"
-            :open="!!selectedProject"
             @close="closeModal"
         />
     </section>
