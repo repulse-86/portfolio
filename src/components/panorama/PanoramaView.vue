@@ -159,7 +159,7 @@ defineExpose({ scrollToSection, scrollToStep: goToStep })
         >
             <div
                 ref="track"
-                class="flex-1 flex items-stretch pt-6 pl-6 sm:pl-32 pr-[15vw] sm:pr-[50vw] w-max shrink-0 h-full"
+                class="panorama-top-gap flex-1 flex items-stretch pl-6 sm:pl-32 pr-[15vw] sm:pr-[50vw] w-max shrink-0 h-full"
             >
                 <section
                     id="about"
@@ -229,6 +229,16 @@ defineExpose({ scrollToSection, scrollToStep: goToStep })
 </template>
 
 <style scoped>
+/*
+ * Gap between the header and the panorama columns.
+ * Regular height (800px viewport) = pt-6 (1.5rem); above that it grows by
+ * 50px per 100px of extra height: calc(50vh - 376px) == 1.5rem + (100vh - 800px) * 0.5
+ */
+.panorama-top-gap {
+    padding-top: clamp(1.5rem, calc(50vh - 376px), 20rem);
+    padding-top: clamp(1.5rem, calc(50dvh - 376px), 20rem);
+}
+
 @media (min-width: 640px) {
     .panorama-hover-scroll {
         overflow-y: hidden;
