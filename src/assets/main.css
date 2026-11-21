@@ -34,6 +34,14 @@ body::-webkit-scrollbar,
     height: 0;
 }
 
+html.panorama-mode,
+html.panorama-mode body {
+    overflow: hidden;
+    overscroll-behavior: none;
+    height: 100%;
+    height: 100dvh;
+}
+
 body {
     transition:
         background-color 0.3s ease,

@@ -151,15 +151,15 @@ defineExpose({ scrollToSection, scrollToStep: goToStep })
 <template>
     <div
         id="app"
-        class="flex-1 min-h-0 w-full flex flex-col bg-white text-black overflow-hidden select-none dark:bg-zinc-950 dark:text-white"
+        class="flex-1 min-h-0 w-full h-full flex flex-col bg-white text-black overflow-hidden select-none dark:bg-zinc-950 dark:text-white"
     >
         <main
             ref="viewport"
-            class="flex-1 w-full overflow-x-auto overflow-y-hidden no-scrollbar relative flex flex-col justify-between snap-x snap-mandatory scroll-pl-6 sm:scroll-pl-32"
+            class="flex-1 w-full h-full overflow-x-auto overflow-y-hidden no-scrollbar relative flex flex-col justify-between snap-x snap-mandatory scroll-pl-6 sm:scroll-pl-32"
         >
             <div
                 ref="track"
-                class="flex-1 flex items-stretch pt-6 pl-6 sm:pl-32 pr-[15vw] sm:pr-[50vw] w-max shrink-0 max-h-full"
+                class="flex-1 flex items-stretch pt-6 pl-6 sm:pl-32 pr-[15vw] sm:pr-[50vw] w-max shrink-0 h-full"
             >
                 <section
                     id="about"

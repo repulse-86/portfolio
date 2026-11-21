@@ -39,11 +39,16 @@ const resetWindowScroll = () => {
     window.scrollTo(0, 0)
 }
 
-watch(panoramaMode, () => {
-    activeSection.value = 'about'
-    resetWindowScroll()
-    nextTick(resetWindowScroll)
-})
+watch(
+    panoramaMode,
+    (enabled) => {
+        document.documentElement.classList.toggle('panorama-mode', enabled)
+        activeSection.value = 'about'
+        resetWindowScroll()
+        nextTick(resetWindowScroll)
+    },
+    { immediate: true },
+)
 
 const handleSectionClick = (section: PanoramaSection) => {
     if (!panoramaMode.value) return
@@ -55,7 +60,7 @@ const handleSectionClick = (section: PanoramaSection) => {
     <div
         id="top"
         :class="
-            panoramaMode ? 'flex h-screen flex-col overflow-hidden' : 'flex min-h-screen flex-col'
+            panoramaMode ? 'flex h-dvh flex-col overflow-hidden' : 'flex min-h-screen flex-col'
         "
     >
         <ToastNotification :toast="toast" />
