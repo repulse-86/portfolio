@@ -35,7 +35,7 @@ const stepSection = (direction: number) => {
     })
 }
 
-useWheelPager(viewport, stepSection)
+useWheelPager(viewport, stepSection, { skipClassName: 'panorama-hover-scroll' })
 
 const heroImage = computed(() => props.project.images[0] ?? props.project.thumbnailImages[0])
 
@@ -78,7 +78,7 @@ onUnmounted(() => {
             <div class="flex h-full w-max items-stretch pt-6 pl-6 sm:pl-32 pr-[15vw] sm:pr-[50vw]">
                 <section
                     id="overview"
-                    class="shrink-0 snap-start flex flex-col mr-4 sm:mr-8 w-[85vw] sm:w-[50vw] h-full overflow-y-auto"
+                    class="panorama-hover-scroll shrink-0 snap-start flex flex-col mr-4 sm:mr-8 w-[85vw] sm:w-[50vw] h-full overflow-y-auto pb-8"
                     :aria-label="`${project.title} overview`"
                 >
                     <div class="mb-4 flex items-baseline justify-between gap-4">
@@ -216,3 +216,32 @@ onUnmounted(() => {
         />
     </div>
 </template>
+
+<style scoped>
+@media (min-width: 640px) {
+    .panorama-hover-scroll {
+        overflow-y: hidden;
+        scrollbar-width: none;
+    }
+
+    .panorama-hover-scroll:hover {
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgb(161 161 170 / 0.6) transparent;
+    }
+
+    .panorama-hover-scroll:hover::-webkit-scrollbar {
+        display: block;
+        width: 8px;
+    }
+
+    .panorama-hover-scroll:hover::-webkit-scrollbar-thumb {
+        background-color: rgb(161 161 170 / 0.6);
+        border-radius: 9999px;
+    }
+
+    .panorama-hover-scroll:hover::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+}
+</style>
