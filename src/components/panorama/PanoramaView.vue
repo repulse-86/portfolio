@@ -7,6 +7,7 @@ import ExperiencePanel from './ExperiencePanel.vue'
 import ContactPanel from './ContactPanel.vue'
 import FooterPanel from './FooterPanel.vue'
 import ProjectDetail from './ProjectDetail.vue'
+import { useTurnstileAnimation } from '@/composables/useTurnstileAnimation'
 import { useWheelPager } from '@/composables/useWheelPager'
 import { prefersReducedMotion } from '@/utils/media'
 import { findNearestIndex, getSnapPoints } from '@/utils/scroll'
@@ -25,8 +26,11 @@ const emit = defineEmits<{
 
 const viewport = ref<HTMLElement | null>(null)
 const track = ref<HTMLElement | null>(null)
+const detailRef = ref<InstanceType<typeof ProjectDetail> | null>(null)
 const currentStep = ref(0)
 const selectedProject = ref<Project | null>(null)
+
+const { isAnimating: isTurning, turn } = useTurnstileAnimation()
 
 const projectPageCount = ref(1)
 const SECTION_STAGGER = 0.4
@@ -77,8 +81,9 @@ const goToStep = (index: number) => {
     animateScrollTo(points[clampedIdx])
 }
 
-const scrollToSection = (sectionId: string) => {
-    if (!viewport.value || !track.value) return
+const scrollToSection = async (sectionId: string) => {
+    if (!viewport.value || !track.value || isTurning.value) return
+    if (selectedProject.value) await closeProject()
     const el = track.value.querySelector<HTMLElement>(`#${sectionId}`)
     if (!el) return
     const points = getPoints()
@@ -137,13 +142,27 @@ onUnmounted(() => {
     window.removeEventListener('resize', handleResize)
 })
 
-const openProject = (project: Project) => {
-    selectedProject.value = project
-}
+const getPanoramaItems = (): HTMLElement[] => (viewport.value ? [viewport.value] : [])
 
-const closeProject = () => {
-    selectedProject.value = null
-}
+const openProject = (project: Project) =>
+    turn({
+        direction: 'forward',
+        getOutgoing: getPanoramaItems,
+        getIncoming: () => detailRef.value?.getTurnstileItems() ?? [],
+        swap: () => {
+            selectedProject.value = project
+        },
+    })
+
+const closeProject = () =>
+    turn({
+        direction: 'backward',
+        getOutgoing: () => detailRef.value?.getTurnstileItems() ?? [],
+        getIncoming: getPanoramaItems,
+        swap: () => {
+            selectedProject.value = null
+        },
+    })
 
 defineExpose({ scrollToSection, scrollToStep: goToStep })
 </script>
@@ -151,7 +170,7 @@ defineExpose({ scrollToSection, scrollToStep: goToStep })
 <template>
     <div
         id="app"
-        class="flex-1 min-h-0 w-full h-full flex flex-col bg-white text-black overflow-hidden select-none dark:bg-zinc-950 dark:text-white"
+        class="relative flex-1 min-h-0 w-full h-full flex flex-col bg-white text-black overflow-hidden select-none dark:bg-zinc-950 dark:text-white"
     >
         <main
             ref="viewport"
@@ -217,14 +236,13 @@ defineExpose({ scrollToSection, scrollToStep: goToStep })
             </div>
         </main>
 
-        <Transition name="view-slide" mode="out-in">
-            <ProjectDetail
-                v-if="selectedProject"
-                key="detail"
-                :project="selectedProject"
-                @back="closeProject"
-            />
-        </Transition>
+        <ProjectDetail
+            v-if="selectedProject"
+            ref="detailRef"
+            key="detail"
+            :project="selectedProject"
+            @back="closeProject"
+        />
     </div>
 </template>
 

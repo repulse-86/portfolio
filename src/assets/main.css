@@ -126,6 +126,62 @@ body:has(dialog[open]) {
     transform: translateY(-10px);
 }
 
+.turnstile-item {
+    transform-origin: -24px 50%;
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+}
+
+.turnstile--fwd-out {
+    transform: perspective(1100px) rotateY(-88deg);
+    opacity: 0;
+    transition:
+        transform 230ms cubic-bezier(0.55, 0.055, 0.675, 0.19) var(--turn-delay, 0ms),
+        opacity 195ms ease-in var(--turn-delay, 0ms);
+}
+
+.turnstile--fwd-in-start {
+    transition: none;
+    transform: perspective(1100px) rotateY(85deg);
+    opacity: 0;
+}
+
+.turnstile--fwd-in {
+    transform: perspective(1100px) rotateY(0deg) translateZ(0px);
+    opacity: 1;
+    transition:
+        transform 340ms cubic-bezier(0.16, 1, 0.3, 1) var(--turn-delay, 0ms),
+        opacity 204ms ease-out var(--turn-delay, 0ms);
+}
+
+.turnstile--back-out {
+    transform: perspective(1100px) rotateY(88deg);
+    opacity: 0;
+    transition:
+        transform 230ms cubic-bezier(0.55, 0.055, 0.675, 0.19) var(--turn-delay, 0ms),
+        opacity 195ms ease-in var(--turn-delay, 0ms);
+}
+
+.turnstile--back-in-start {
+    transition: none;
+    transform: perspective(1100px) rotateY(-85deg);
+    opacity: 0;
+}
+
+.turnstile--back-in {
+    transform: perspective(1100px) rotateY(0deg) translateZ(0px);
+    opacity: 1;
+    transition:
+        transform 340ms cubic-bezier(0.16, 1, 0.3, 1) var(--turn-delay, 0ms),
+        opacity 204ms ease-out var(--turn-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .turnstile-item {
+        transition: none !important;
+    }
+}
+
 @keyframes section-reveal {
     from {
         opacity: 0;

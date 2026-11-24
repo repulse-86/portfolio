@@ -20,6 +20,11 @@ const emit = defineEmits<{
 
 const wide = useMediaQuery('(min-width: 640px)')
 const viewport = ref<HTMLElement | null>(null)
+const root = ref<HTMLElement | null>(null)
+
+const getTurnstileItems = (): HTMLElement[] => (root.value ? [root.value] : [])
+
+defineExpose({ getTurnstileItems })
 
 const stepSection = (direction: number) => {
     const el = viewport.value
@@ -70,7 +75,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="relative h-full bg-white dark:bg-zinc-950">
+    <div ref="root" class="absolute inset-0 bg-white dark:bg-zinc-950">
         <div
             ref="viewport"
             class="h-full w-full overflow-x-auto overflow-y-hidden no-scrollbar relative snap-x snap-mandatory scroll-pl-6 sm:scroll-pl-32"
