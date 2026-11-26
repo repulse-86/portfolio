@@ -182,21 +182,60 @@ body:has(dialog[open]) {
     }
 }
 
-@keyframes section-reveal {
+@keyframes panorama-header-enter {
     from {
         opacity: 0;
+        transform: translateX(35vw) scale(0.6);
     }
     to {
         opacity: 1;
+        transform: translateX(0) scale(1);
     }
 }
 
-.section-reveal {
-    animation: section-reveal 0.7s ease both;
+@keyframes panorama-section-fade {
+    from {
+        opacity: 0;
+        scale: 0.45;
+    }
+    to {
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+@keyframes panorama-section-slide {
+    0% {
+        /* far bottom tail. */
+        translate: 2vw 20px;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+    }
+    /* rightmost bulge: the reversal, timed to the fade/zoom midpoint. */
+    37.5% {
+        translate: 28vw 8px;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* near top tail, then the last leftward glide into place. */
+    100% {
+        translate: 0 0;
+    }
+}
+
+.panorama-intro-header {
+    transform-origin: left center;
+    animation: panorama-header-enter 1s cubic-bezier(0.08, 0.88, 0.22, 1) backwards;
+}
+
+.panorama-intro-section {
+    transform-origin: center center;
+    animation:
+        panorama-section-fade 1.95s cubic-bezier(0.4, 0, 0.6, 1) var(--intro-delay, 0ms) backwards,
+        panorama-section-slide 2.6s cubic-bezier(0.4, 0, 0.6, 1) var(--intro-delay, 0ms) backwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .section-reveal {
+    .panorama-intro-header,
+    .panorama-intro-section {
         animation: none;
     }
 }

@@ -33,8 +33,16 @@ const selectedProject = ref<Project | null>(null)
 const { isAnimating: isTurning, turn } = useTurnstileAnimation()
 
 const projectPageCount = ref(1)
-const SECTION_STAGGER = 0.4
-const sectionDelay = (index: number) => `${index * SECTION_STAGGER}s`
+const introPageCount = ref(projectPageCount.value)
+let introDelaysLocked = false
+
+const SECTION_BASE_MS = 40
+const SECTION_STAGGER_MS = 400
+const sectionDelay = (index: number) => `${SECTION_BASE_MS + index * SECTION_STAGGER_MS}ms`
+
+watch(projectPageCount, (count) => {
+    if (!introDelaysLocked) introPageCount.value = count
+})
 
 let snapPoints: number[] = []
 const refreshSnapPoints = () => {
@@ -124,6 +132,7 @@ const handleResize = () => {
 watch(projectPageCount, () => nextTick(refreshSnapPoints))
 
 onMounted(() => {
+    introDelaysLocked = true
     refreshSnapPoints()
     if (viewport.value) {
         viewport.value.addEventListener('scroll', handleScroll, { passive: true })
@@ -182,56 +191,82 @@ defineExpose({ scrollToSection, scrollToStep: goToStep })
             >
                 <section
                     id="about"
-                    class="section-reveal panorama-hover-scroll shrink-0 snap-start flex flex-col mr-4 sm:mr-8 w-[85vw] sm:w-[50vw] h-full overflow-y-auto pb-8"
-                    :style="{ animationDelay: sectionDelay(0) }"
+                    class="shrink-0 snap-start flex flex-col mr-4 sm:mr-8 w-[85vw] sm:w-[50vw] h-full"
+                    :style="{ '--intro-delay': sectionDelay(0) }"
                 >
-                    <div class="mb-4 flex items-baseline justify-between">
-                        <h2 class="text-2xl sm:text-3xl font-normal lowercase tracking-tight">
-                            about
-                        </h2>
+                    <div class="panorama-intro-section flex flex-col h-full">
+                        <div
+                            class="panorama-hover-scroll flex flex-col h-full overflow-y-auto pb-8"
+                        >
+                            <div class="mb-4 flex items-baseline justify-between">
+                                <h2
+                                    class="text-2xl sm:text-3xl font-normal lowercase tracking-tight"
+                                >
+                                    about
+                                </h2>
+                            </div>
+                            <AboutPanel :skills="props.skills" @navigate="scrollToSection" />
+                        </div>
                     </div>
-                    <AboutPanel :skills="props.skills" @navigate="scrollToSection" />
                 </section>
 
                 <ProjectsPanel
                     :projects="props.projects"
-                    :reveal-start="SECTION_STAGGER"
+                    :reveal-start="SECTION_BASE_MS + SECTION_STAGGER_MS"
                     @select="openProject"
                     @page-count="projectPageCount = $event"
                 />
 
                 <section
                     id="experience"
-                    class="section-reveal panorama-hover-scroll shrink-0 snap-start flex flex-col mr-4 sm:mr-8 w-[85vw] sm:w-[50vw] h-full overflow-y-auto pb-8"
-                    :style="{ animationDelay: sectionDelay(1 + projectPageCount) }"
+                    class="shrink-0 snap-start flex flex-col mr-4 sm:mr-8 w-[85vw] sm:w-[50vw] h-full"
+                    :style="{ '--intro-delay': sectionDelay(1 + introPageCount) }"
                 >
-                    <div class="mb-4 flex items-baseline justify-between">
-                        <h2 class="text-2xl sm:text-3xl font-normal lowercase tracking-tight">
-                            experience
-                        </h2>
+                    <div class="panorama-intro-section flex flex-col h-full">
+                        <div
+                            class="panorama-hover-scroll flex flex-col h-full overflow-y-auto pb-8"
+                        >
+                            <div class="mb-4 flex items-baseline justify-between">
+                                <h2
+                                    class="text-2xl sm:text-3xl font-normal lowercase tracking-tight"
+                                >
+                                    experience
+                                </h2>
+                            </div>
+                            <ExperiencePanel :experience="props.experience" />
+                        </div>
                     </div>
-                    <ExperiencePanel :experience="props.experience" />
                 </section>
 
                 <section
                     id="contact"
-                    class="section-reveal shrink-0 snap-start flex flex-col mr-4 sm:mr-8 w-[85vw] sm:w-[50vw] h-full overflow-y-auto"
-                    :style="{ animationDelay: sectionDelay(2 + projectPageCount) }"
+                    class="shrink-0 snap-start flex flex-col mr-4 sm:mr-8 w-[85vw] sm:w-[50vw] h-full"
+                    :style="{ '--intro-delay': sectionDelay(2 + introPageCount) }"
                 >
-                    <div class="mb-4 flex items-baseline justify-between">
-                        <h2 class="text-2xl sm:text-3xl font-normal lowercase tracking-tight">
-                            contact
-                        </h2>
+                    <div class="panorama-intro-section flex flex-col h-full">
+                        <div class="flex flex-col h-full overflow-y-auto">
+                            <div class="mb-4 flex items-baseline justify-between">
+                                <h2
+                                    class="text-2xl sm:text-3xl font-normal lowercase tracking-tight"
+                                >
+                                    contact
+                                </h2>
+                            </div>
+                            <ContactPanel :copy-btn-text="props.copyBtnText" @copy="emit('copy')" />
+                        </div>
                     </div>
-                    <ContactPanel :copy-btn-text="props.copyBtnText" @copy="emit('copy')" />
                 </section>
 
                 <section
                     id="footer"
-                    class="section-reveal shrink-0 snap-start flex flex-col mr-4 sm:mr-8 w-[85vw] sm:w-[50vw] h-full overflow-hidden"
-                    :style="{ animationDelay: sectionDelay(3 + projectPageCount) }"
+                    class="shrink-0 snap-start flex flex-col mr-4 sm:mr-8 w-[85vw] sm:w-[50vw] h-full"
+                    :style="{ '--intro-delay': sectionDelay(3 + introPageCount) }"
                 >
-                    <FooterPanel @navigate="scrollToSection" />
+                    <div class="panorama-intro-section flex flex-col h-full">
+                        <div class="flex flex-col h-full overflow-hidden">
+                            <FooterPanel @navigate="scrollToSection" />
+                        </div>
+                    </div>
                 </section>
             </div>
         </main>

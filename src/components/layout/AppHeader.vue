@@ -65,7 +65,9 @@ const handleBrandClick = (event: MouseEvent) => {
         <div
             :class="[
                 'mx-auto grid h-16 w-full grid-cols-3 items-center',
-                panoramaMode ? 'max-w-none pl-6 pr-6 sm:pl-32 sm:pr-32' : 'max-w-5xl px-6',
+                panoramaMode
+                    ? 'panorama-intro-header max-w-none pl-6 pr-6 sm:pl-32 sm:pr-32'
+                    : 'max-w-5xl px-6',
             ]"
         >
             <a

@@ -32,33 +32,40 @@ const projectPages = computed(() => {
 
 watch(projectPages, (pages) => emit('page-count', pages.length), { immediate: true })
 
-const pageDelay = (index: number) => `${(props.revealStart ?? 0) + index * 0.4}s`
+const PAGE_STAGGER_MS = 400
+const pageDelay = (index: number) => `${(props.revealStart ?? 0) + index * PAGE_STAGGER_MS}ms`
 </script>
 
 <template>
     <template v-for="(page, pageIdx) in projectPages" :key="pageIdx">
         <div
             :id="pageIdx === 0 ? 'projects' : `projects-${pageIdx + 1}`"
-            class="section-reveal panorama-hover-scroll shrink-0 snap-start flex flex-col mr-4 sm:mr-8 w-[85vw] sm:w-[50vw] h-full overflow-y-auto pb-8"
-            :style="{ animationDelay: pageDelay(pageIdx) }"
+            class="shrink-0 snap-start flex flex-col mr-4 sm:mr-8 w-[85vw] sm:w-[50vw] h-full"
+            :style="{ '--intro-delay': pageDelay(pageIdx) }"
         >
-            <div class="mb-4 flex items-baseline justify-between">
-                <h2
-                    class="text-2xl sm:text-3xl font-normal lowercase tracking-tight"
-                    :class="{ invisible: pageIdx > 0 }"
-                    :aria-hidden="pageIdx > 0"
-                >
-                    projects
-                </h2>
-            </div>
+            <div class="panorama-intro-section flex flex-col h-full">
+                <div class="panorama-hover-scroll flex flex-col h-full overflow-y-auto pb-8">
+                    <div class="mb-4 flex items-baseline justify-between">
+                        <h2
+                            class="text-2xl sm:text-3xl font-normal lowercase tracking-tight"
+                            :class="{ invisible: pageIdx > 0 }"
+                            :aria-hidden="pageIdx > 0"
+                        >
+                            projects
+                        </h2>
+                    </div>
 
-            <div class="flex-1 grid grid-cols-2 sm:grid-cols-3 auto-rows-min content-start gap-4">
-                <ProjectCard
-                    v-for="project in page"
-                    :key="project.id"
-                    :project="project"
-                    @select="$emit('select', project)"
-                />
+                    <div
+                        class="flex-1 grid grid-cols-2 sm:grid-cols-3 auto-rows-min content-start gap-4"
+                    >
+                        <ProjectCard
+                            v-for="project in page"
+                            :key="project.id"
+                            :project="project"
+                            @select="$emit('select', project)"
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     </template>
